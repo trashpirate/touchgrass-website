@@ -26,7 +26,7 @@ const config: Config = {
         xxs: "372px",
       },
       maxWidth: {
-        maxWide: "500px",
+        maxWide: "750px",
       },
     },
   },
