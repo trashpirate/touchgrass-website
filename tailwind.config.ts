@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      // fontFamily: {
+      //   sans: ['"Proxima Nova"', ...defaultTheme.fontFamily.sans],
+      // },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
@@ -17,6 +20,13 @@ const config: Config = {
         primary: "#052e16",
         secondary: "#059669",
         highlight: "#4ade80",
+      },
+      screens: {
+        xs: "465px",
+        xxs: "372px",
+      },
+      maxWidth: {
+        maxWide: "500px",
       },
     },
   },

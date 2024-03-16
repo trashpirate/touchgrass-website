@@ -1,23 +1,22 @@
+'use client'
 var classNames = require('classnames');
-import { Disclosure } from '@headlessui/react';
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/solid';
+
 import Image from 'next/image';
 import BuyButton from '../buttons';
 import Link from 'next/link';
+import MenuIcon from '@/components/menuIcon';
 
 const navigation = [
     { name: 'Introduction', href: '#introduction', current: true },
     { name: 'Tokenomics', href: '#tokenomics', current: false },
-    { name: 'Buy', href: '#buy', current: false },
-    { name: 'Products', href: '#products', current: false },
     { name: 'Exchanges', href: '#exchanges', current: false },
     { name: 'Bridge', href: 'https://app.debridge.finance/deport?inputChain=1&outputChain=56&inputCurrency=0x0b61C4f33BCdEF83359ab97673Cb5961c6435F4E&outputCurrency=', current: false },
 ];
 
 export default function Navbar() {
     return (
-        <nav className="top-0 w-full z-20 my-4 flex justify-between">
-            <Link className="flex px-5 py-15 text-center h-16 align-middle" href="https://touchfreshgrass.com/" target={"_blank"}>
+        <nav className="top-0 w-full z-20 my-4 flex justify-between h-16 ">
+            <Link className="flex " href="https://touchfreshgrass.com/" target={"_blank"}>
                 <Image
                     src="/logo.png"
                     alt="GRASS logo"
@@ -27,8 +26,8 @@ export default function Navbar() {
                     priority
                 />
             </Link>
-            <div className="hidden sm:ml-6 sm:block">
-                <div className="flex space-x-4 my-auto h-full">
+            <div className="hidden sm:ml-6 sm:block my-auto">
+                <div className="flex space-x-4 h-full align-middle">
                     {navigation.map((item) => (
                         <div>
                             <a
@@ -49,19 +48,12 @@ export default function Navbar() {
                             {/* <div className="bg-primary h-1 w-0 hover:w-full px-2"></div> */}
                         </div>
                     ))}
+                    <BuyButton></BuyButton>
                 </div>
+
             </div>
 
-            <Link className="flex px-5 py-15 text-center h-16 align-middle" href="https://touchfreshgrass.com/" target={"_blank"}>
-                <Image
-                    src="/logo.png"
-                    alt="GRASS logo"
-                    className="border-full p-2 w-auto h-full"
-                    width={100}
-                    height={100}
-                    priority
-                />
-            </Link>
+            <MenuIcon></MenuIcon>
         </nav>
     );
 }
