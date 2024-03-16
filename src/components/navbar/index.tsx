@@ -1,10 +1,6 @@
 'use client'
 var classNames = require('classnames');
-
-import Image from 'next/image';
 import BuyButton from '../buttons';
-import Link from 'next/link';
-import MenuIcon from '@/components/menuIcon';
 
 const navigation = [
     { name: 'Introduction', href: '#introduction', current: true },
@@ -15,17 +11,8 @@ const navigation = [
 
 export default function Navbar() {
     return (
-        <nav className="top-0 w-full z-20 my-4 flex justify-between h-16 ">
-            <Link className="flex " href="https://touchfreshgrass.com/" target={"_blank"}>
-                <Image
-                    src="/logo.png"
-                    alt="GRASS logo"
-                    className="border-full p-2 w-auto h-full"
-                    width={100}
-                    height={100}
-                    priority
-                />
-            </Link>
+        <nav className="top-0 w-full my-4 flex justify-center h-16 ">
+
             <div className="hidden sm:ml-6 sm:block my-auto">
                 <div className="flex space-x-4 h-full align-middle">
                     {navigation.map((item) => (
@@ -52,8 +39,8 @@ export default function Navbar() {
                 </div>
 
             </div>
+            {/* <div className="h-10 w-10"></div> */}
 
-            <MenuIcon></MenuIcon>
         </nav>
     );
 }

@@ -2,14 +2,17 @@
 import styles from './page.module.css'
 import Video from 'next-video';
 import videoLoop from '/videos/grass_01.mov'; // use your video file name
-import Navbar from '@/components/navbar';
-import { SocialIcon } from 'react-social-icons';
 import Link from 'next/link';
 import Image from 'next/image';
 
+import Navbar from '@/components/navbar';
+
+import Menu from '@/components/menu';
+import Homepage from '@/components/homepage';
+
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between no-scrollbar overflow-y-scroll bg-primary">
+    <main className="flex min-h-screen flex-col items-center justify-between no-scrollbar overflow-y-scroll bg-primary z-0">
 
       <Video
         src={videoLoop}
@@ -19,41 +22,21 @@ export default function Home() {
         playsInline
         controls={false}
         className={styles.video}
-      >
-      </Video>
-      <div className='fixed top-0 w-full px-12 py-4 flex flex-col justify-between h-full'>
+      ></Video>
+      <Link className="fixed top-0 left-10 flex z-50 h-16 my-4" href="https://touchfreshgrass.com/" target={"_blank"}>
+        <Image
+          src="/logo.png"
+          alt="GRASS logo"
+          className="border-full p-2 w-auto h-full"
+          width={100}
+          height={100}
+          priority
+        />
+      </Link>
+      <Menu></Menu>
+      <div className='fixed top-0 w-full px-8 sm:px-12 py-4 flex flex-col justify-between h-full z-20'>
         <Navbar></Navbar>
-        <div className='flex justify-end pb-8'>
-
-          <div className='text-xl text-right bg-secondary/20 backdrop-blur p-8 rounded-xl max-w-maxWide'>
-            <div className='my-4 flex gap-4 w-full pl-1 justify-end'>
-              <SocialIcon network="telegram" url="https://t.me/touchinggrass" bgColor="#059669" style={{ height: 30, width: 30 }} label="Telegram" />
-              <SocialIcon network="x" url="https://twitter.com/TouchFreshGrass" bgColor="#059669" style={{ height: 30, width: 30 }} label="X" />
-              <Link href="https://etherscan.io/address/0x0b61C4f33BCdEF83359ab97673Cb5961c6435F4E#code">
-                <Image
-                  src="/etherscan.png"
-                  width={122}
-                  height={122}
-                  style={{ width: "30px", height: "auto", opacity: "0.8" }}
-                  alt="etherscan"
-                />
-              </Link>
-
-            </div>
-            <p className='mb-4 font-semibold text-primary '>
-              Join Touch $GRASS to disconnect from technology, and engage with the physical world, specifically by being in nature or getting fresh air.
-            </p>
-            <div className='my-2 font-semibold text-primary'>
-              <p>BEP20 Contract Address:</p>
-              <p>0xce611ecec4d31a356f4e4c0967b51f3d861f79cb</p>
-            </div>
-            <div className='mt-2 font-semibold text-primary'>
-              <p>ERC20 Contract Address:</p>
-              <p>0xbC68AE53d383f399Cc18268034C5E656fCb839f3</p>
-            </div>
-          </div>
-
-        </div>
+        <Homepage></Homepage>
       </div>
 
     </main>
