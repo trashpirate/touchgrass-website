@@ -31,7 +31,7 @@ export default function BuyButton() {
                         <Menu.Item>
                             {({ active }) => (
                                 <a
-                                    href="https://app.uniswap.org/swap?outputCurrency=0x0b61C4f33BCdEF83359ab97673Cb5961c6435F4E"
+                                    href="https://app.uniswap.org/swap?chain=base&outputCurrency=0x0b61C4f33BCdEF83359ab97673Cb5961c6435F4E"
                                     className={classNames(active ? 'bg-highlight/50' : '', 'block px-4 py-2 text-sm text-primary font-bold')}
                                 >
                                     Buy on Uniswap (ETH)
@@ -41,7 +41,7 @@ export default function BuyButton() {
                         <Menu.Item>
                             {({ active }) => (
                                 <a
-                                    href="https://pancakeswap.finance/swap?chain=bsc&outputCurrency=0x2aC895fEba458B42884DCbCB47D57e44c3a303c8"
+                                    href="https://pancakeswap.finance/swap?chain=base&outputCurrency=0x2aC895fEba458B42884DCbCB47D57e44c3a303c8"
                                     className={classNames(active ? 'bg-highlight/50' : '', 'block px-4 py-2 text-sm text-primary font-bold')}
                                 >
                                     Buy on PancakeSwap (BNB)

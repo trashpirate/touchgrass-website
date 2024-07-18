@@ -8,17 +8,16 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      // fontFamily: {
-      //   sans: ['"Proxima Nova"', ...defaultTheme.fontFamily.sans],
-      // },
+      fontFamily: {
+        heading: ["mistral-mn", "sans-serif"], // Or ['CustomFont', 'sans-serif'] for local fonts
+      },
       backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+        "hero-pattern": "url('/background.jpg')",
       },
       colors: {
-        primary: "#052e16",
-        secondary: "#059669",
+        textColor: "#fff",
+        primary: "#0133cc",
+        secondary: "#21bb03",
         highlight: "#4ade80",
       },
       screens: {
