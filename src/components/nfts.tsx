@@ -1,31 +1,26 @@
-import { SocialIcon } from 'react-social-icons';
-import Link from 'next/link';
+
 import Image from 'next/image';
-import CopyToClipboard from './copyToClipboard';
 
-import { useReadContract } from 'wagmi'
-
-import { Alchemy, AssetTransfersCategory, Network, Utils } from "alchemy-sdk";
+import { Alchemy, Network, Utils } from "alchemy-sdk";
 import { TOKEN_CONTRACT, NFT_CONTRACT, TOKEN_SYMBOL } from '@/lib/metadata';
 import { tokenABI } from "@/assets/tokenABI";
 import { useEffect, useState } from 'react';
-import { formatEther, formatUnits } from 'viem';
 import { nftABI } from '@/assets/nftABI';
 import { wagmiConfig } from '@/lib/config';
 import TokenAddressInput from './tokenAddressInput';
-
-import { stringify } from 'flatted';
-
-const debugObject = (obj: any, label: string) => {
-    try {
-        console.log(label, stringify(obj));
-    } catch (error) {
-        console.error(`Error stringifying ${label}:`, error);
-    }
-};
-
+import CopyToClipboard from './copyToClipboard';
+import LinkButton from './buttons/linkButton';
 
 const TREASURY_WALLET = "0x248518FCb021213a4c524e4acFc7Ce5CAB04d192";
+const TREASURY_VALUE = 8075;
+
+const TRAIT_MULTIPLIER: Record<string, number> = ({
+    "GREEN": 0.00025316455,
+    "BLUE": 0.002,
+    "YELLOW": 0.0025,
+    "RED": 0.01,
+    "PURPLE": 0.02,
+})
 
 const alchemyConfig = {
     apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY,
@@ -34,6 +29,12 @@ const alchemyConfig = {
 
 const alchemy = new Alchemy(alchemyConfig);
 
+
+type TokenInfo = {
+    id: number;
+    balance: number;
+    symbol: string;
+}
 
 
 function getTokenBalanceString(amount: number, symbol: string) {
@@ -44,11 +45,7 @@ function getTokenBalanceString(amount: number, symbol: string) {
     return text;
 }
 
-type TokenInfo = {
-    id: number;
-    balance: number;
-    symbol: string;
-}
+
 
 export default function Nfts() {
 
@@ -66,6 +63,7 @@ export default function Nfts() {
 
     const [treasuryBalances, setTreasuryBalances] = useState<TokenInfo[]>();
     const [totalSupply, setTotalSupply] = useState<number>(0);
+    const [reward, setReward] = useState<string>("");
     const [walletInput, setWallet] = useState('');
 
     useEffect(() => {
@@ -112,14 +110,31 @@ export default function Nfts() {
         getTotalSupply();
     }, [])
 
-    const handleWalletChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleWalletChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
         setWallet(value);
+
+        if (value.slice(0, 2) == "0x" && value.length == 42) {
+            let options = {
+                contractAddresses: [NFT_CONTRACT]
+            };
+            const nfts = await alchemy.nft.getNftsForOwner(value, options);
+            let sum: number = 0;
+            for (let i = 0; i < nfts.ownedNfts.length; i++) {
+                const nft = nfts.ownedNfts[i];
+                const trait: string = nft.raw.metadata.attributes[0].value;
+                sum += TRAIT_MULTIPLIER[trait] * TREASURY_VALUE;
+            }
+            setReward(getTokenBalanceString(sum, 'USD'));
+        }
+        else {
+            setReward(getTokenBalanceString(0, 'USD'))
+        }
     };
 
     // // Example usage to debug alchemy and wagmiConfig
     // debugObject(alchemy, 'Alchemy instance');
-    // debugObject(wagmiConfig, 'Wagmi config');
+    // debugObject(wagmiConfig, 'Wagmi config');0xA4afbA149200B08E917A368C9cc9eD77d0c279a1
 
     return (
         <div id='nfts' className='flex flex-col h-fit w-full relative py-36 bg-black/60'>
@@ -135,11 +150,14 @@ export default function Nfts() {
                 style={{ width: "auto", height: "250px" }}
                 alt="touch grassy"
             />
-            <div className='flex flex-row mx-auto gap-8 w-full max-w-5xl flex-wrap-reverse px-4 justify-center'>
-                <div className="p-8 text-textColor w-full sm:w-fit mx-auto bg-secondary/40 rounded-xl">
-                    <h1 className='text-xl font-heading uppercase text-center my-2'>Stats</h1>
-                    <h2 className='opacity-70 text-lg text-center'>Total: 1000 NFTs</h2>
-                    <h2 className='opacity-70 text-lg text-center'>{`Minted: ${totalSupply} NFTs`}</h2>
+            <div className='flex flex-row mx-auto gap-8 w-full max-w-5xl flex-wrap-reverse px-4 justify-center h-96'>
+                <div className="p-8 text-textColor w-full sm:w-fit mx-auto bg-secondary/40 rounded-xl h-full flex flex-col justify-between">
+                    <div>
+                        <h1 className='text-xl font-heading uppercase text-center my-2'>Stats</h1>
+                        <h2 className='opacity-70 text-lg text-center'>Total: 1000 NFTs</h2>
+                        <h2 className='opacity-70 text-lg text-center'>{`Minted: ${totalSupply} NFTs`}</h2>
+                    </div>
+
                     <table className="w-full text-left border-spacing-x-6 border-separate mt-8">
                         <thead className=" flex-grow font-bold text-xl font-heading">
                             <tr >
@@ -173,24 +191,31 @@ export default function Nfts() {
                         </tbody>
                     </table>
                 </div>
-                <div className="p-8 text-textColor w-full max-w-xl mx-auto bg-secondary/40 rounded-xl">
-                    {/* <p className='text-center mx-auto'>Touch Grassy, reduce stress, and improve your mood by disconnecting from technology and engaging with the physical world.</p> */}
+                <div className="p-8 text-textColor w-full max-w-xl mx-auto bg-secondary/40 rounded-xl h-full flex flex-col justify-between gap-10">
+                    <div className='flex flex-col justify-center'>
+                        <div className='text-2xl leading-tight font-heading mx-auto'><LinkButton buttonText=' MINT ' externalLink='https://app.touchbasedgrass.com'></LinkButton></div>
+                        <div className='text-center mx-auto my-4 max-w-80'>Touch Grassy holders receive revenue share from the Touch Grass treasury.</div>
 
-                    <div className='my-4'>
-                        <p className='text-center mx-auto my-2'>Touch Grassy holders receive revenue share from the Touch Grass treasury.</p>
-                        <div className='mt-8 flex flex-row justify-between gap-6'>
-                            <div>
-                                <h2 className='uppercase font-heading mx-auto font-bold  text-xl'>Treasury Holdings</h2>
-                                <div className='gap-2 align-middle leading-4 mb-2 flex flex-row w-48'>
-                                    <CopyToClipboard
-                                        text="0xbb4f69a0fca3f63477b6b3b2a3e8491e5425a356"
-                                        copyText="0xbb4f69a0fca3f63477b6b3b2a3e8491e5425a356"
-                                        textColor='text-textColor'
-                                        textSize='text-sm'
-                                        iconSize='text-[10px]'
-                                    />
+                    </div>
+
+
+                    <div className='w-full h-80 flex justify-end'>
+                        <div className='flex flex-row justify-between w-full h-full'>
+                            <div className='flex flex-col w-full h-full justify-between'>
+                                <div className=''>
+                                    <h2 className='uppercase font-heading font-bold text-xl'>Treasury Holdings</h2>
+                                    <div className='gap-2 align-middle leading-4 my-auto flex flex-row w-48'>
+                                        <CopyToClipboard
+                                            text="0xbb4f69a0fca3f63477b6b3b2a3e8491e5425a356"
+                                            copyText="0xbb4f69a0fca3f63477b6b3b2a3e8491e5425a356"
+                                            textColor='text-textColor'
+                                            textSize='text-sm'
+                                            iconSize='text-[10px]'
+                                        />
+                                    </div>
                                 </div>
-                                <ul className='text-xl mt-8'>
+
+                                <ul className='text-xl'>
                                     {treasuryBalances?.map((item) => (
                                         <li key={item.id} className="">
                                             {item.balance > 0 && getTokenBalanceString(item.balance, item.symbol)}
@@ -199,10 +224,17 @@ export default function Nfts() {
                                 </ul>
                             </div>
 
-                            <div className='w-fit mx-4'>
-                                <h1 className='uppercase font-heading font-bold text-xl'>NFT Revenue Share</h1>
-                                <TokenAddressInput handler={handleWalletChange} value={walletInput}></TokenAddressInput>
-                                <p className='my-2 text-xs w-64 text-ellipsis overflow-hidden'>{walletInput}</p>
+                            <div className='flex flex-col w-full h-full justify-between'>
+                                <div>
+                                    <h1 className='uppercase font-heading font-bold text-xl'>NFT Revenue Share</h1>
+                                    <TokenAddressInput handler={handleWalletChange} value={walletInput}></TokenAddressInput>
+                                </div>
+                                <div>
+                                    <div className='opacity-80 text-sm'>Next payout: SEP 1, 2024</div>
+                                    <div className='text-xl w-64 text-ellipsis overflow-hidden'>{`${reward}`}</div>
+                                </div>
+
+
                             </div>
 
                         </div>
