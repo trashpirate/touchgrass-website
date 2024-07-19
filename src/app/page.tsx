@@ -17,7 +17,7 @@ export default function Home() {
         priority
         className="bg-cover bg-repeat-y"
       ></Image>
-      <Link className="fixed top-3 left-3 sm:left-10 md:left-14 flex z-50 h-16 my-4" href="/" target={"_blank"}>
+      <Link className="fixed top-4 left-3 sm:left-10 md:left-14 flex z-50 h-16 my-4" href="/" target={"_blank"}>
         <Image
           src="/logo.png"
           alt="Touch Grass logo"

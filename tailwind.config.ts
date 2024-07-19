@@ -12,7 +12,7 @@ const config: Config = {
         heading: ["mistral-mn", "sans-serif"], // Or ['CustomFont', 'sans-serif'] for local fonts
       },
       backgroundImage: {
-        "hero-pattern": "url('/background.jpg')",
+        "hero-pattern": "url('/background_wide.jpg')",
       },
       colors: {
         textColor: "#fff",
