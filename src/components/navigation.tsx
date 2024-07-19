@@ -4,6 +4,7 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
 
 import LinkButton from "./buttons/linkButton";
+import Link from "next/link";
 
 var classNames = require('classnames');
 const navigation = [
@@ -25,7 +26,7 @@ export default function Menu() {
 
                     {navigation.map((item) => (
                         <li key={item.id} className="h-16 w-fit mx-auto">
-                            <a
+                            <Link
                                 href={item.href}
                                 className='text-primary rounded-md text-2xl sm:text-4xl leading-4 align-middle mx-auto font-semibold uppercase group z-50'
                                 aria-current={item.current ? 'page' : undefined}
@@ -35,7 +36,7 @@ export default function Menu() {
                                 <div key={item.id} className={classNames(
                                     item.current ? '  bg-primary rounded-full h-2' : 'bg-primary h-0 group-hover:h-2 ', "rounded-full w-full transition-all duration-500"
                                 )}></div>
-                            </a>
+                            </Link>
                             {/* <div className="bg-primary h-1 w-0 hover:w-full px-2"></div> */}
                         </li>
                     ))}
@@ -45,30 +46,30 @@ export default function Menu() {
             <div className=" h-16 w-16  z-50"></div>
             {click ? <></> :
                 <div className="hidden lg:ml-6 lg:flex m-auto z-50 w-full  justify-center">
-                    <ul className="flex space-x-4 h-full align-middle mx-auto text-2xl leading-tight">
+                    <div className="flex space-x-4 h-full align-middle mx-auto text-2xl leading-tight">
                         {navigation.map((item) => (
-                            <li key={item.id} className="my-auto ">
-                                <a
 
-                                    href={item.href}
-                                    className={classNames(
-                                        item.current ? '  text-primary' : 'text-black',
-                                        'rounded-md py-2 leading-4 align-middle my-auto font-semibold uppercase group'
-                                    )}
-                                    aria-current={item.current ? 'page' : undefined}
-                                >
-                                    {item.name}
-                                    <div className={classNames(
-                                        item.current ? '  bg-primary rounded-full w-full' : 'bg-black w-0 group-hover:w-full ', "rounded-full h-1 transition-all duration-500"
-                                    )}></div>
-                                </a>
+                            <Link
 
-                                {/* <div className="bg-primary h-1 w-0 hover:w-full px-2"></div> */}
-                            </li>
+                                href={item.href}
+                                className={classNames(
+                                    item.current ? '  text-primary' : 'text-black',
+                                    'rounded-md py-2 leading-4 align-middle my-auto font-semibold uppercase group'
+                                )}
+                                aria-current={item.current ? 'page' : undefined}
+                            >
+                                {item.name}
+                                <div className={classNames(
+                                    item.current ? '  bg-primary rounded-full w-full' : 'bg-black w-0 group-hover:w-full ', "mt-1 rounded-full h-1 transition-all duration-500"
+                                )}></div>
+                            </Link>
+
+
+
                         ))}
-                        <li><LinkButton buttonText="BUY $GRASS" externalLink="https://app.uniswap.org/swap?chain=base&outputCurrency=0xbb4f69a0fca3f63477b6b3b2a3e8491e5425a356"></LinkButton></li>
+                        <div><LinkButton buttonText="BUY $GRASS" externalLink="https://app.uniswap.org/swap?chain=base&outputCurrency=0xbb4f69a0fca3f63477b6b3b2a3e8491e5425a356"></LinkButton></div>
 
-                    </ul>
+                    </div>
                 </div>}
 
             <nav className="w-16 flex justify-end h-16 z-50">

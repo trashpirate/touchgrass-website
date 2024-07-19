@@ -39,7 +39,7 @@ export default function RootLayout({
 }) {
   const cookie = headers().get("cookie");
   return (
-    <html lang="en">
+    <html lang="en" className="h-full scroll-smooth">
       <body className={inter.className}>
         <Providers cookie={cookie}>{children}</Providers>
       </body>

@@ -17,7 +17,7 @@ export default function Home() {
         priority
         className="bg-cover bg-repeat-y"
       ></Image>
-      <Link className="hover:scale-110 fixed top-4 left-3 sm:left-10 md:left-14 flex z-50 h-16 w-16 my-4  transition-all duration-500" href="/" target={"_blank"}>
+      <Link className="hover:scale-110 fixed top-4 left-3 sm:left-10 md:left-14 flex z-50 h-16 w-16 my-4  transition-all duration-500" href="/">
         <Image
           src="/logo.png"
           alt="Touch Grass logo"

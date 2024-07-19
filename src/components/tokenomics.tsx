@@ -1,12 +1,9 @@
-import { SocialIcon } from 'react-social-icons';
-import Link from 'next/link';
 import Image from 'next/image';
-import CopyToClipboard from './copyToClipboard';
 
 
 export default function Tokenomics() {
     return (
-        <div id='tokenomics' className='flex flex-col h-fit w-full py-36 bg-primary/90'>
+        <section id='tokenomics' className='flex flex-col h-fit w-full py-36 bg-primary/90'>
             <div className='flex flex-col w-max mx-auto'>
                 <h1 className='text-secondary text-4xl sm:text-6xl leading-tight align-middle font-semibold uppercase font-heading'>Tokenomics</h1>
                 <div className='bg-secondary rounded-full h-1 sm:h-2 w-full'></div>
@@ -54,6 +51,6 @@ export default function Tokenomics() {
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
     )
 }

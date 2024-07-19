@@ -134,7 +134,7 @@ export default function Nfts() {
     };
 
     return (
-        <div id='nfts' className='flex flex-col h-fit w-full relative py-36 bg-black/60'>
+        <section id='nfts' className='flex flex-col h-fit w-full relative py-36 bg-black/60'>
             <div className='flex flex-col w-max mx-auto'>
                 <h1 className='text-textColor text-4xl sm:text-6xl leading-tight align-middle font-semibold uppercase font-heading'>Touch Grassy</h1>
                 <div className='bg-textColor rounded-full h-1 sm:h-2 w-full'></div>
@@ -240,6 +240,6 @@ export default function Nfts() {
                 </div>
             </div>
 
-        </div>
+        </section>
     )
 }
