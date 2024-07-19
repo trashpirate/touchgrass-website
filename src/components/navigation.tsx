@@ -18,9 +18,7 @@ export default function Menu() {
     const [activeSection, setActiveSection] = useState<string>("");
 
     const handleClick = () => setClick(!click);
-    useEffect(() => {
-        console.log(activeSection);
-    }, [activeSection])
+
     return (
         <div className="fixed top-4 w-full flex z-30 h-16 my-4 justify-between pr-5 sm:pr-10 md:pr-16 font-heading">
 
