@@ -125,6 +125,7 @@ export default function Nfts() {
                 const trait: string = nft.raw.metadata.attributes[0].value;
                 sum += TRAIT_MULTIPLIER[trait] * TREASURY_VALUE;
             }
+            sum /= 4;
             setReward(getTokenBalanceString(sum, 'USD'));
         }
         else {
@@ -190,7 +191,7 @@ export default function Nfts() {
                 <div className="p-8 text-textColor w-full max-w-xl mx-auto bg-secondary/40 rounded-xl h-full flex flex-col justify-between gap-10">
                     <div className='flex flex-col justify-center'>
                         <div className='text-2xl leading-tight font-heading mx-auto'><LinkButton buttonText=' MINT ' externalLink='https://app.touchbasedgrass.com'></LinkButton></div>
-                        <div className='text-center mx-auto my-4 max-w-80'>Touch Grassy holders receive revenue share from the Touch Grass treasury.</div>
+                        <div className='text-center mx-auto my-4'>Touch Grassy NFT holders receive monthly revenue share from 1/4 of the Touch Grass treasury balance.</div>
 
                     </div>
 
