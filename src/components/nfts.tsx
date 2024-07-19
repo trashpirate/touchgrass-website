@@ -3,8 +3,124 @@ import Link from 'next/link';
 import Image from 'next/image';
 import CopyToClipboard from './copyToClipboard';
 
+import { useReadContract } from 'wagmi'
+
+import { Alchemy, AssetTransfersCategory, Network, Utils } from "alchemy-sdk";
+import { TOKEN_CONTRACT, NFT_CONTRACT, TOKEN_SYMBOL } from '@/lib/metadata';
+import { tokenABI } from "@/assets/tokenABI";
+import { useEffect, useState } from 'react';
+import { formatEther, formatUnits } from 'viem';
+import { nftABI } from '@/assets/nftABI';
+import { wagmiConfig } from '@/lib/config';
+import TokenAddressInput from './tokenAddressInput';
+
+import { stringify } from 'flatted';
+
+const debugObject = (obj: any, label: string) => {
+    try {
+        console.log(label, stringify(obj));
+    } catch (error) {
+        console.error(`Error stringifying ${label}:`, error);
+    }
+};
+
+
+const TREASURY_WALLET = "0x248518FCb021213a4c524e4acFc7Ce5CAB04d192";
+
+const alchemyConfig = {
+    apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY,
+    network: Network.BASE_MAINNET,
+};
+
+const alchemy = new Alchemy(alchemyConfig);
+
+
+
+function getTokenBalanceString(amount: number, symbol: string) {
+    const text = `${amount.toLocaleString(undefined, {
+        minimumFractionDigits: 3,
+        maximumFractionDigits: 3,
+    })}${String.fromCharCode(8239)} ${symbol}`
+    return text;
+}
+
+type TokenInfo = {
+    id: number;
+    balance: number;
+    symbol: string;
+}
 
 export default function Nfts() {
+
+    const tokenContract = {
+        address: TOKEN_CONTRACT,
+        abi: tokenABI,
+        wagmiConfig
+    };
+
+    const nftContract = {
+        address: NFT_CONTRACT,
+        abi: nftABI,
+        wagmiConfig
+    };
+
+    const [treasuryBalances, setTreasuryBalances] = useState<TokenInfo[]>();
+    const [totalSupply, setTotalSupply] = useState<number>(0);
+    const [walletInput, setWallet] = useState('');
+
+    useEffect(() => {
+        async function getBalances() {
+
+            let tokens: TokenInfo[] = [];
+            const ethBalance = Utils.formatEther(await alchemy.core.getBalance(TREASURY_WALLET));
+
+            tokens.push({
+                id: 0,
+                balance: Number(ethBalance),
+                symbol: "ETH"
+            })
+
+            const balances = await alchemy.core.getTokenBalances(TREASURY_WALLET, ["0x803b629c339941e2b77d2dc499dac9e1fd9eac66"]);
+
+            for (let i = 0; i < balances["tokenBalances"].length; i++) {
+                const token = balances["tokenBalances"][i];
+                const info = await alchemy.core.getTokenMetadata(token.contractAddress);
+                if (info.decimals && info.symbol && token.tokenBalance) {
+                    tokens.push({
+                        id: i = 1,
+                        balance: Number(Utils.formatUnits(token.tokenBalance, info.decimals)),
+                        symbol: info.symbol
+                    })
+                }
+            }
+            setTreasuryBalances(tokens);
+        }
+        getBalances();
+    }, [])
+
+    useEffect(() => {
+        async function getTotalSupply() {
+            let tx = {
+                to: NFT_CONTRACT,
+                data: "0x18160ddd7f15c72528c2f94fd8dfe3c8d5aa26e2c50c7d81f4bc7bee8d4b7932",
+            }
+            let response = await alchemy.core.call(tx);
+            if (response) {
+                setTotalSupply(Number(Utils.hexValue(response)));
+            }
+        }
+        getTotalSupply();
+    }, [])
+
+    const handleWalletChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        setWallet(value);
+    };
+
+    // // Example usage to debug alchemy and wagmiConfig
+    // debugObject(alchemy, 'Alchemy instance');
+    // debugObject(wagmiConfig, 'Wagmi config');
+
     return (
         <div id='nfts' className='flex flex-col h-fit w-full relative py-36 bg-black/60'>
             <div className='flex flex-col w-max mx-auto'>
@@ -23,7 +139,7 @@ export default function Nfts() {
                 <div className="p-8 text-textColor w-full sm:w-fit mx-auto bg-secondary/40 rounded-xl">
                     <h1 className='text-xl font-heading uppercase text-center my-2'>Stats</h1>
                     <h2 className='opacity-70 text-lg text-center'>Total: 1000 NFTs</h2>
-                    <h2 className='opacity-70 text-lg text-center'>Minted: 1000 NFTs</h2>
+                    <h2 className='opacity-70 text-lg text-center'>{`Minted: ${totalSupply} NFTs`}</h2>
                     <table className="w-full text-left border-spacing-x-6 border-separate mt-8">
                         <thead className=" flex-grow font-bold text-xl font-heading">
                             <tr >
@@ -58,22 +174,36 @@ export default function Nfts() {
                     </table>
                 </div>
                 <div className="p-8 text-textColor w-full max-w-xl mx-auto bg-secondary/40 rounded-xl">
-                    <p className='text-center mx-auto'>Touch Grassy, reduce stress, and improve your mood by disconnecting from technology and engaging with the physical world.</p>
+                    {/* <p className='text-center mx-auto'>Touch Grassy, reduce stress, and improve your mood by disconnecting from technology and engaging with the physical world.</p> */}
 
                     <div className='my-4'>
                         <p className='text-center mx-auto my-2'>Touch Grassy holders receive revenue share from the Touch Grass treasury.</p>
-                        <div className=''>
-                            <h2 className='uppercase font-heading mx-auto'>Treasury Holdings</h2>
-                            <div className='gap-2 align-middle leading-4 mb-2 flex flex-row w-48'>
-                                <CopyToClipboard
-                                    text="0xbb4f69a0fca3f63477b6b3b2a3e8491e5425a356"
-                                    copyText="0xbb4f69a0fca3f63477b6b3b2a3e8491e5425a356"
-                                    textColor='text-textColor'
-                                    textSize='text-sm'
-                                    iconSize='text-[10px]'
-                                />
+                        <div className='mt-8 flex flex-row justify-between gap-6'>
+                            <div>
+                                <h2 className='uppercase font-heading mx-auto font-bold  text-xl'>Treasury Holdings</h2>
+                                <div className='gap-2 align-middle leading-4 mb-2 flex flex-row w-48'>
+                                    <CopyToClipboard
+                                        text="0xbb4f69a0fca3f63477b6b3b2a3e8491e5425a356"
+                                        copyText="0xbb4f69a0fca3f63477b6b3b2a3e8491e5425a356"
+                                        textColor='text-textColor'
+                                        textSize='text-sm'
+                                        iconSize='text-[10px]'
+                                    />
+                                </div>
+                                <ul className='text-xl mt-8'>
+                                    {treasuryBalances?.map((item) => (
+                                        <li key={item.id} className="">
+                                            {item.balance > 0 && getTokenBalanceString(item.balance, item.symbol)}
+                                        </li>
+                                    ))}
+                                </ul>
                             </div>
 
+                            <div className='w-fit mx-4'>
+                                <h1 className='uppercase font-heading font-bold text-xl'>NFT Revenue Share</h1>
+                                <TokenAddressInput handler={handleWalletChange} value={walletInput}></TokenAddressInput>
+                                <p className='my-2 text-xs w-64 text-ellipsis overflow-hidden'>{walletInput}</p>
+                            </div>
 
                         </div>
                     </div>

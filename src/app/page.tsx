@@ -1,13 +1,13 @@
 'use client'
 import Link from 'next/link';
-import Image from 'next/image';
+import Image from 'next/legacy/image';
 
 import Menu from '@/components/navigation';
 import Homepage from '@/components/homepage';
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between no-scrollbar overflow-y-scroll bg-primary z-0">
+    <main className="flex min-h-screen flex-col items-center justify-between no-scrollbar overflow-y-scroll bg-primary z-0 relative">
 
       <Image
         src="/background_wide.jpg"

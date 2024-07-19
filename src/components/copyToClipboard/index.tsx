@@ -26,10 +26,10 @@ export default function CopyToClipboard(props: { text: string; copyText: string;
   };
 
   return (
-    <div className="flex flex-row hover:cursor-pointer opacity-80 hover:opacity-100 transition-all duration-100 w-full justify-end h-8 pt-1">
-      <a href={`https://basescan.org/address/${props.copyText}`} target="_blank" className={`${props.textSize} ${props.textColor} text-ellipsis overflow-hidden leading-tight my-auto`}>{props.text}</a>
+    <div className="flex flex-row hover:cursor-pointer opacity-80 hover:opacity-100 transition-all duration-100 w-full justify-end ">
+      <a href={`https://basescan.org/address/${props.copyText}`} target="_blank" className={`${props.textSize} ${props.textColor} text-ellipsis overflow-hidden leading-normal py-1`}>{props.text}</a>
       <div onClick={copylink} className="flex justify-center align-middle">
-        <div className={`${props.textColor} ${props.iconSize} ml-2 h-fit align-middle w-4 my-auto`}>
+        <div className={`${props.textColor} ${props.iconSize} ml-2 h-full py-1 align-middle w-4`}>
           {copied ? <CheckIcon /> : <ClipboardDocumentIcon />}
         </div>
 
