@@ -132,10 +132,6 @@ export default function Nfts() {
         }
     };
 
-    // // Example usage to debug alchemy and wagmiConfig
-    // debugObject(alchemy, 'Alchemy instance');
-    // debugObject(wagmiConfig, 'Wagmi config');0xA4afbA149200B08E917A368C9cc9eD77d0c279a1
-
     return (
         <div id='nfts' className='flex flex-col h-fit w-full relative py-36 bg-black/60'>
             <div className='flex flex-col w-max mx-auto'>
@@ -150,12 +146,12 @@ export default function Nfts() {
                 style={{ width: "auto", height: "250px" }}
                 alt="touch grassy"
             />
-            <div className='flex flex-row mx-auto gap-8 w-full max-w-5xl flex-wrap-reverse px-4 justify-center h-96'>
+            <div className='flex flex-row mx-auto gap-8 w-full max-w-5xl flex-wrap-reverse px-4 justify-center sm:h-96'>
                 <div className="p-8 text-textColor w-full sm:w-fit mx-auto bg-secondary/40 rounded-xl h-full flex flex-col justify-between">
                     <div>
-                        <h1 className='text-xl font-heading uppercase text-center my-2'>Stats</h1>
-                        <h2 className='opacity-70 text-lg text-center'>Total: 1000 NFTs</h2>
-                        <h2 className='opacity-70 text-lg text-center'>{`Minted: ${totalSupply} NFTs`}</h2>
+                        <h1 className='text-xl font-bold font-heading uppercase text-center my-2'>Stats</h1>
+                        <div className='w-full flex flex-row justify-between text-base'><h2>Total:</h2><h2>1000 NFTs</h2></div>
+                        <div className='w-full flex flex-row justify-between text-base'><h2>Minted:</h2><h2>{`${totalSupply} NFTs`}</h2></div>
                     </div>
 
                     <table className="w-full text-left border-spacing-x-6 border-separate mt-8">
@@ -166,7 +162,7 @@ export default function Nfts() {
                             </tr>
                         </thead>
                         <tbody className="w-fit text-base font-semibold">
-                            <tr>
+                            <tr >
                                 <td>GREEN</td>
                                 <td>79 %</td>
                             </tr>
@@ -199,9 +195,9 @@ export default function Nfts() {
                     </div>
 
 
-                    <div className='w-full h-80 flex justify-end'>
-                        <div className='flex flex-row justify-between w-full h-full'>
-                            <div className='flex flex-col w-full h-full justify-between'>
+                    <div className='w-full sm:h-80 flex justify-end'>
+                        <div className='flex flex-row justify-between w-full h-full flex-wrap'>
+                            <div className='flex flex-col w-fit h-full justify-between mb-8 sm:mb-auto'>
                                 <div className=''>
                                     <h2 className='uppercase font-heading font-bold text-xl'>Treasury Holdings</h2>
                                     <div className='gap-2 align-middle leading-4 my-auto flex flex-row w-48'>
@@ -216,15 +212,16 @@ export default function Nfts() {
                                 </div>
 
                                 <ul className='text-xl'>
-                                    {treasuryBalances?.map((item) => (
+                                    <li>{getTokenBalanceString(TREASURY_VALUE, "USD")}</li>
+                                    {/* {treasuryBalances?.map((item) => (
                                         <li key={item.id} className="">
                                             {item.balance > 0 && getTokenBalanceString(item.balance, item.symbol)}
                                         </li>
-                                    ))}
+                                    ))} */}
                                 </ul>
                             </div>
 
-                            <div className='flex flex-col w-full h-full justify-between'>
+                            <div className='flex flex-col w-fit h-full justify-between'>
                                 <div>
                                     <h1 className='uppercase font-heading font-bold text-xl'>NFT Revenue Share</h1>
                                     <TokenAddressInput handler={handleWalletChange} value={walletInput}></TokenAddressInput>

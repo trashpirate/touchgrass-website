@@ -17,13 +17,13 @@ export default function Home() {
         priority
         className="bg-cover bg-repeat-y"
       ></Image>
-      <Link className="fixed top-4 left-3 sm:left-10 md:left-14 flex z-50 h-16 my-4" href="/" target={"_blank"}>
+      <Link className="hover:scale-110 fixed top-4 left-3 sm:left-10 md:left-14 flex z-50 h-16 w-16 my-4  transition-all duration-500" href="/" target={"_blank"}>
         <Image
           src="/logo.png"
           alt="Touch Grass logo"
-          className="border-full m-2 w-auto h-14 hover:scale-110 transition-all duration-500"
-          width={80}
-          height={80}
+          className="border-full m-2 w-auto h-14"
+          width={64}
+          height={64}
         />
       </Link>
       <Menu></Menu>
