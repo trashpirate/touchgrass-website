@@ -1,5 +1,5 @@
 export const PROJECT_NAME = "Touch Grass";
-export const PROJECT_DESCRIPTION = "Touch Grass Website";
+export const PROJECT_DESCRIPTION = "Join Touch $GRASS to disconnect from technology, and engage with the physical world, specifically by being in nature and getting fresh air.";
 export const TOKEN_SYMBOL = "GRASS";
 
 export const TOKEN_CONTRACT = "0xbb4f69a0fca3f63477b6b3b2a3e8491e5425a356" as `0x${string}`;
