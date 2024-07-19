@@ -1,7 +1,7 @@
 'use client'
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import LinkButton from "./buttons/linkButton";
 import Link from "next/link";
@@ -14,10 +14,13 @@ const navigation = [
 ];
 
 export default function Menu() {
-    const [click, setClick] = useState(false);
+    const [click, setClick] = useState<boolean>(false);
+    const [activeSection, setActiveSection] = useState<string>("");
 
     const handleClick = () => setClick(!click);
-
+    useEffect(() => {
+        console.log(activeSection);
+    }, [activeSection])
     return (
         <div className="fixed top-4 w-full flex z-30 h-16 my-4 justify-between pr-5 sm:pr-10 md:pr-16 font-heading">
 
@@ -30,11 +33,11 @@ export default function Menu() {
                                 href={item.href}
                                 className='text-primary rounded-md text-2xl sm:text-4xl leading-4 align-middle mx-auto font-semibold uppercase group z-50'
                                 aria-current={item.current ? 'page' : undefined}
-                                onClick={handleClick}
+                                onClick={() => { setActiveSection(item.href); setClick(!click) }}
                             >
                                 {item.name}
                                 <div key={item.id} className={classNames(
-                                    item.current ? '  bg-primary rounded-full h-2' : 'bg-primary h-0 group-hover:h-2 ', "rounded-full w-full transition-all duration-500"
+                                    item.href == activeSection ? '  bg-primary rounded-full h-2' : 'bg-primary h-0 group-hover:h-2 ', "rounded-full w-full transition-all duration-500"
                                 )}></div>
                             </Link>
                             {/* <div className="bg-primary h-1 w-0 hover:w-full px-2"></div> */}
@@ -50,21 +53,20 @@ export default function Menu() {
                         {navigation.map((item) => (
 
                             <Link
-
+                                key={item.id}
                                 href={item.href}
                                 className={classNames(
-                                    item.current ? '  text-primary' : 'text-black',
+                                    item.href == activeSection ? '  text-primary' : 'text-black',
                                     'rounded-md py-2 leading-4 align-middle my-auto font-semibold uppercase group'
                                 )}
-                                aria-current={item.current ? 'page' : undefined}
+                                aria-current={item.href == activeSection ? 'page' : undefined}
+                                onClick={() => { setActiveSection(item.href) }}
                             >
                                 {item.name}
                                 <div className={classNames(
-                                    item.current ? '  bg-primary rounded-full w-full' : 'bg-black w-0 group-hover:w-full ', "mt-1 rounded-full h-1 transition-all duration-500"
+                                    item.href == activeSection ? '  bg-primary rounded-full w-full' : 'bg-black w-0 group-hover:w-full ', "mt-1 rounded-full h-1 transition-all duration-500"
                                 )}></div>
                             </Link>
-
-
 
                         ))}
                         <div><LinkButton buttonText="BUY $GRASS" externalLink="https://app.uniswap.org/swap?chain=base&outputCurrency=0xbb4f69a0fca3f63477b6b3b2a3e8491e5425a356"></LinkButton></div>
