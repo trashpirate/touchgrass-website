@@ -3,7 +3,7 @@ import { SocialIcon } from "react-social-icons";
 
 export default function ContactUs() {
     return (
-        <section id='contactUs' className='flex flex-col h-screen w-full relative bg-primary/90 justify-center'>
+        <section id='contactUs' className='flex flex-col min-h-screen w-full relative bg-primary/90 justify-center'>
             <div className='flex flex-col w-max mx-auto'>
                 <h1 className='text-secondary text-4xl sm:text-6xl leading-tight align-middle font-semibold uppercase font-heading'>Contact Us</h1>
                 <div className='bg-secondary rounded-full h-1 sm:h-2 w-full'></div>

@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 export default function Tokenomics() {
     return (
-        <section id='tokenomics' className='flex flex-col h-screen w-full bg-primary/90 justify-center'>
+        <section id='tokenomics' className='flex flex-col min-h-screen w-full bg-primary/90 justify-center py-36'>
             <div className='flex flex-col w-max mx-auto'>
                 <h1 className='text-secondary text-4xl sm:text-6xl leading-tight align-middle font-semibold uppercase font-heading'>Tokenomics</h1>
                 <div className='bg-secondary rounded-full h-1 sm:h-2 w-full'></div>
