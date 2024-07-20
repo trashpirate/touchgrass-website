@@ -2,17 +2,13 @@
 import Image from 'next/image';
 
 import { Alchemy, Network, Utils } from "alchemy-sdk";
-import { TOKEN_CONTRACT, NFT_CONTRACT, TOKEN_SYMBOL } from '@/lib/metadata';
-import { tokenABI } from "@/assets/tokenABI";
+import { NFT_CONTRACT } from '@/lib/metadata';
 import { useEffect, useState } from 'react';
-import { nftABI } from '@/assets/nftABI';
-import { wagmiConfig } from '@/lib/config';
 import TokenAddressInput from './tokenAddressInput';
-import CopyToClipboard from './copyToClipboard';
 import LinkButton from './buttons/linkButton';
 
 const TREASURY_WALLET = "0x248518FCb021213a4c524e4acFc7Ce5CAB04d192";
-const TREASURY_VALUE = 8075;
+const TREASURY_VALUE = 8586;
 
 const TRAIT_MULTIPLIER: Record<string, number> = ({
     "GREEN": 0.00025316455,
@@ -48,18 +44,6 @@ function getTokenBalanceString(amount: number, symbol: string) {
 
 
 export default function Nfts() {
-
-    const tokenContract = {
-        address: TOKEN_CONTRACT,
-        abi: tokenABI,
-        wagmiConfig
-    };
-
-    const nftContract = {
-        address: NFT_CONTRACT,
-        abi: nftABI,
-        wagmiConfig
-    };
 
     const [treasuryBalances, setTreasuryBalances] = useState<TokenInfo[]>();
     const [totalSupply, setTotalSupply] = useState<number>(0);
