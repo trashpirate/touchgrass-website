@@ -6,7 +6,7 @@ import CopyToClipboard from './copyToClipboard';
 
 export default function Introduction() {
     return (
-        <div id="introduction" className='flex justify-end h-[calc(100vh-6rem)] w-full relative p-4 md:p-16'>
+        <div id="introduction" className='flex justify-end h-screen w-full relative p-4 md:p-16'>
             <div className='mb-8 mr-0 ml-auto mt-auto text-md sm:text-xl text-right bg-secondary/50 backdrop-blur p-8 rounded-xl xs:max-w-maxWide w-full h-fit'>
                 <div className='flex gap-4 w-full pl-1 justify-end h-16'>
                     <SocialIcon className=' hover:scale-125 transition-all duration-500 my-auto' network="telegram" url="https://t.me/TouchBasedGrass" bgColor="#0133cc" style={{ height: 30, width: 30 }} label="Telegram" />

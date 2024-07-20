@@ -8,7 +8,7 @@ import Tokenomics from './tokenomics';
 
 export default function Homepage() {
     return (
-        <div className='no-scrollbar overflow-y-auto h-screen w-full mt-24'>
+        <div className='no-scrollbar overflow-y-auto h-screen w-full'>
             <Introduction></Introduction>
             <Tokenomics></Tokenomics>
             <Nfts></Nfts>

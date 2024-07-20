@@ -39,8 +39,8 @@ type TokenInfo = {
 
 function getTokenBalanceString(amount: number, symbol: string) {
     const text = `${amount.toLocaleString(undefined, {
-        minimumFractionDigits: 3,
-        maximumFractionDigits: 3,
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
     })}${String.fromCharCode(8239)} ${symbol}`
     return text;
 }
@@ -151,8 +151,8 @@ export default function Nfts() {
                 <div className="p-8 text-textColor w-full sm:w-fit mx-auto bg-secondary/40 rounded-xl h-full flex flex-col justify-between">
                     <div>
                         <h1 className='text-xl font-bold font-heading uppercase text-center my-2'>Stats</h1>
-                        <div className='w-full flex flex-row justify-between text-base'><h2>Total:</h2><h2>1000 NFTs</h2></div>
-                        <div className='w-full flex flex-row justify-between text-base'><h2>Minted:</h2><h2>{`${totalSupply} NFTs`}</h2></div>
+                        <div className='w-full flex flex-row justify-between text-lg'><h2>Total:</h2><h2>1000 NFTs</h2></div>
+                        <div className='w-full flex flex-row justify-between text-lg'><h2>Minted:</h2><h2>{`${totalSupply} NFTs`}</h2></div>
                     </div>
 
                     <table className="w-full text-left border-spacing-x-6 border-separate mt-8">
@@ -190,18 +190,22 @@ export default function Nfts() {
                 </div>
                 <div className="p-8 text-textColor w-full max-w-xl mx-auto bg-secondary/40 rounded-xl h-full flex flex-col justify-between gap-10">
                     <div className='flex flex-col justify-center'>
-                        <div className='text-2xl leading-tight font-heading mx-auto'><LinkButton buttonText=' MINT ' externalLink='https://app.touchbasedgrass.com'></LinkButton></div>
-                        <div className='text-center mx-auto my-4'>Touch Grassy NFT holders receive monthly revenue share from 1/4 of the Touch Grass treasury balance.</div>
+                        <div className='text-2xl leading-tight font-heading mx-auto'>
+                            <LinkButton buttonText=' MINT ' externalLink='https://app.touchbasedgrass.com'></LinkButton></div>
+                        <div className='text-lg text-center mx-auto my-4 opacity-70'>
+                            Touch Grassy NFT holders receive monthly revenue share from 1/4 of the Touch Grass treasury balance.
+                        </div>
 
                     </div>
 
 
                     <div className='w-full sm:h-80 flex justify-end'>
                         <div className='flex flex-row justify-between w-full h-full flex-wrap'>
-                            <div className='flex flex-col w-fit h-full justify-between mb-8 sm:mb-auto'>
+                            <div className='flex flex-col w-fit h-full mb-8 sm:mb-auto'>
                                 <div className=''>
-                                    <h2 className='uppercase font-heading font-bold text-xl'>Treasury Holdings</h2>
-                                    <div className='gap-2 align-middle leading-4 my-auto flex flex-row w-48'>
+                                    <h2 className='uppercase font-heading font-bold text-xl mb-4'>Treasury Holdings</h2>
+
+                                    {/* <div className='gap-2 align-middle leading-4 my-auto flex flex-row w-48'>
                                         <CopyToClipboard
                                             text="0xbb4f69a0fca3f63477b6b3b2a3e8491e5425a356"
                                             copyText="0xbb4f69a0fca3f63477b6b3b2a3e8491e5425a356"
@@ -209,17 +213,18 @@ export default function Nfts() {
                                             textSize='text-sm'
                                             iconSize='text-[10px]'
                                         />
-                                    </div>
+                                    </div> */}
                                 </div>
 
-                                <ul className='text-xl'>
-                                    <li>{getTokenBalanceString(TREASURY_VALUE, "USD")}</li>
+                                <div className=' h-full flex flex-col justify-between'>
+                                    <div className='font-semibold text-lg'>{getTokenBalanceString(TREASURY_VALUE, "USD")}</div>
                                     {/* {treasuryBalances?.map((item) => (
                                         <li key={item.id} className="">
                                             {item.balance > 0 && getTokenBalanceString(item.balance, item.symbol)}
                                         </li>
                                     ))} */}
-                                </ul>
+                                    <div className='text-xs opacity-70 w-40 mt-4'>Rewards are distributed based on NFT holdings of each trait.</div>
+                                </div>
                             </div>
 
                             <div className='flex flex-col w-fit h-full justify-between'>
@@ -228,7 +233,7 @@ export default function Nfts() {
                                     <TokenAddressInput handler={handleWalletChange} value={walletInput}></TokenAddressInput>
                                 </div>
                                 <div>
-                                    <div className='opacity-80 text-sm'>Next payout: SEP 1, 2024</div>
+                                    <div className='opacity-70 text-sm'>Next payout: SEP 1, 2024</div>
                                     <div className='text-xl w-64 text-ellipsis overflow-hidden'>{`${reward}`}</div>
                                 </div>
 

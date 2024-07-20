@@ -27,6 +27,9 @@ const config: Config = {
       maxWidth: {
         maxWide: "750px",
       },
+      flex: {
+        flexMain: "1 0 auto",
+      },
     },
   },
   plugins: [],
