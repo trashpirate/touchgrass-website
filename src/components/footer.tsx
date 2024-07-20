@@ -5,7 +5,7 @@ import CopyToClipboard from './copyToClipboard';
 
 export default function Footer() {
     return (
-        <footer className="text-center py-4 px-8 w-full bg-black/50">
+        <footer className="text-center py-8 px-8 w-full bg-black/50">
             <div className="text-lg text-secondary mx-auto flex flex-row justify-center ">
                 <p className="opacity-80 mr-2">
                     Copyright 2024 @
