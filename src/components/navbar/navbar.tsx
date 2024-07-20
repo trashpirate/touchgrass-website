@@ -3,18 +3,19 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-import LinkButton from "./buttons/linkButton";
+import LinkButton from "../buttons/linkButton";
 import Link from "next/link";
 import SmoothScrollLink from "./scrollLink";
 
 var classNames = require('classnames');
 const navigation = [
-    { id: 0, name: 'Introduction', href: '#introduction', current: true },
-    { id: 1, name: 'Tokenomics', href: '#tokenomics', current: false },
-    { id: 2, name: 'NFTs', href: '#nfts', current: false },
+    { id: 0, name: 'Introduction', href: '#introduction' },
+    { id: 1, name: 'Tokenomics', href: '#tokenomics' },
+    { id: 2, name: 'NFTs', href: '#nfts' },
+    { id: 3, name: 'Buy $GRASS', href: 'https://app.uniswap.org/swap?chain=base&outputCurrency=0xbb4f69a0fca3f63477b6b3b2a3e8491e5425a356' },
 ];
 
-export default function Menu() {
+export default function Navbar() {
     const [click, setClick] = useState<boolean>(false);
     const [activeSection, setActiveSection] = useState<string>("");
 
@@ -27,7 +28,7 @@ export default function Menu() {
                 <ul className="flex flex-col mx-auto max-w-96 my-auto space-y-8 text-center">
 
                     {navigation.map((item) => (
-                        <li key={item.id} className="h-16 w-fit mx-auto">
+                        <div key={item.id} className="h-16 w-fit mx-auto">
                             <Link
                                 href={item.href}
                                 className='text-primary rounded-md text-2xl sm:text-4xl leading-4 align-middle mx-auto font-semibold uppercase group'
@@ -38,8 +39,7 @@ export default function Menu() {
                                     item.href == activeSection ? '  bg-primary rounded-full h-2' : 'bg-primary h-0 group-hover:h-2 ', "rounded-full w-full transition-all duration-500"
                                 )}></div>
                             </Link>
-                            {/* <div className="bg-primary h-1 w-0 hover:w-full px-2"></div> */}
-                        </li>
+                        </div>
                     ))}
                 </ul>
 
@@ -63,30 +63,27 @@ export default function Menu() {
 
             <div className="hidden absolute left-1/4 top-6 lg:ml-6 lg:flex m-auto w-1/2 justify-center z-50">
                 {!click &&
-                    <nav className="flex space-x-8 h-full align-middle mx-auto text-2xl leading-tight">
+                    <div className="flex space-x-8 h-full align-middle mx-auto text-2xl leading-tight">
                         {navigation.map((item) => (
-                            <div key={item.id}
-                                className={classNames(
-                                    item.href == activeSection ? '  text-primary' : 'text-black',
-                                    'justify-end flex font-semibold uppercase group flex-col gap-0 pb-1'
-                                )}
-                                onClick={() => { setActiveSection(item.href) }}
-                            >
-                                <SmoothScrollLink
-                                    href={item.href}
+                            item.id == 3 ? <div key={item.id}><LinkButton buttonText={item.name} externalLink={item.href}></LinkButton></div> :
+                                <div key={item.id}
+                                    className={classNames(
+                                        item.href == activeSection ? '  text-primary' : 'text-black',
+                                        'justify-end flex font-semibold uppercase group flex-col gap-0 pb-1'
+                                    )}
+                                    onClick={() => { setActiveSection(item.href) }}
                                 >
-                                    {item.name}
-                                </SmoothScrollLink>
-                                <div className={classNames(
-                                    item.href == activeSection ? '  bg-primary rounded-full w-full' : 'bg-black w-0 group-hover:w-full ', "rounded-full h-1 transition-all duration-500"
-                                )}></div>
-                            </div>
-
-
+                                    <SmoothScrollLink
+                                        href={item.href}
+                                    >
+                                        {item.name}
+                                    </SmoothScrollLink>
+                                    <div className={classNames(
+                                        item.href == activeSection ? '  bg-primary rounded-full w-full' : 'bg-black w-0 group-hover:w-full ', "rounded-full h-1 transition-all duration-500"
+                                    )}></div>
+                                </div>
                         ))}
-                        <div><LinkButton buttonText="BUY $GRASS" externalLink="https://app.uniswap.org/swap?chain=base&outputCurrency=0xbb4f69a0fca3f63477b6b3b2a3e8491e5425a356"></LinkButton></div>
-
-                    </nav>
+                    </div>
                 }
             </div>
 

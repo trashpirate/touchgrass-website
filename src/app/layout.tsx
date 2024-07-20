@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { PROJECT_NAME, PROJECT_DESCRIPTION, PROJECT_DOMAIN, PROJECT_X, PROJECT_PREVIEW, PROJECT_URL } from "../lib/metadata";
-import { Providers } from "./prividers";
-import { headers } from "next/headers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -37,11 +35,11 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const cookie = headers().get("cookie");
+
   return (
     <html lang="en" className="!scroll-smooth">
       <body className={inter.className}>
-        <Providers cookie={cookie}>{children}</Providers>
+        {children}
       </body>
     </html>
   );
