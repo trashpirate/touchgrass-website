@@ -8,7 +8,7 @@ import TokenAddressInput from './tokenAddressInput';
 import LinkButton from './buttons/linkButton';
 
 const TREASURY_WALLET = "0x248518FCb021213a4c524e4acFc7Ce5CAB04d192";
-const TREASURY_VALUE = 8586;
+const TREASURY_VALUE = 2.716;
 
 const TRAIT_MULTIPLIER: Record<string, number> = ({
     "GREEN": 0.00025316455,
@@ -32,11 +32,16 @@ type TokenInfo = {
     symbol: string;
 }
 
+async function toUSD(eth: number) {
+    const response = await fetch("/api/eth-price");
+    console.log(response)
+    return Number(response.json) * eth;
+}
 
-function getTokenBalanceString(amount: number, symbol: string) {
+function getTokenBalanceString(amount: number, symbol: string, precision: number) {
     const text = `${amount.toLocaleString(undefined, {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
+        minimumFractionDigits: precision,
+        maximumFractionDigits: precision,
     })}${String.fromCharCode(8239)} ${symbol}`
     return text;
 }
@@ -48,6 +53,8 @@ export default function Nfts() {
     const [treasuryBalances, setTreasuryBalances] = useState<TokenInfo[]>();
     const [totalSupply, setTotalSupply] = useState<number>(0);
     const [reward, setReward] = useState<string>("");
+    const [rewardUsd, setRewardUsd] = useState<string>("");
+    const [treasuryBalanceUsd, setTreasuryBalanceUsd] = useState<string>("");
     const [walletInput, setWallet] = useState('');
 
     useEffect(() => {
@@ -76,8 +83,14 @@ export default function Nfts() {
                 }
             }
             setTreasuryBalances(tokens);
+            const treasury = await toUSD(TREASURY_VALUE);
+            setTreasuryBalanceUsd(getTokenBalanceString(treasury, 'USD', 2));
         }
         getBalances();
+
+
+
+
     }, [])
 
     useEffect(() => {
@@ -110,10 +123,13 @@ export default function Nfts() {
                 sum += TRAIT_MULTIPLIER[trait] * TREASURY_VALUE;
             }
             sum /= 4;
-            setReward(getTokenBalanceString(sum, 'USD'));
+            setReward(getTokenBalanceString(sum, 'ETH', 5));
+            const sumUsd = await toUSD(sum);
+            setRewardUsd(getTokenBalanceString(sumUsd, 'USD', 2));
         }
         else {
-            setReward(getTokenBalanceString(0, 'USD'))
+            setReward(getTokenBalanceString(0, 'ETH', 5))
+            setReward(getTokenBalanceString(0, 'USD', 2));
         }
     };
 
@@ -201,7 +217,7 @@ export default function Nfts() {
                                 </div>
 
                                 <div className=' h-full flex flex-col justify-between'>
-                                    <div className='font-semibold text-lg'>{getTokenBalanceString(TREASURY_VALUE, "USD")}</div>
+                                    <div className='font-semibold text-lg'>{`${getTokenBalanceString(TREASURY_VALUE, "ETH", 3)}`}</div>
                                     {/* {treasuryBalances?.map((item) => (
                                         <li key={item.id} className="">
                                             {item.balance > 0 && getTokenBalanceString(item.balance, item.symbol)}
