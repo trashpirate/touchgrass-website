@@ -29,7 +29,7 @@ async function getTokenPrice(coinId: number) {
 }
 
 export async function GET() {
-  const price = await getTokenPrice(ETH_ID);
-  // const price = 1;
+  // const price = await getTokenPrice(ETH_ID);
+  const price = 1;
   return NextResponse.json(price, { status: 200 });
 }
