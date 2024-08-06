@@ -32,17 +32,22 @@ type TokenInfo = {
     symbol: string;
 }
 
-async function toUSD(eth: number) {
-    const response = await fetch("/api/eth-price");
-    console.log(response)
-    return Number(response.json) * eth;
-}
+
 
 function getTokenBalanceString(amount: number, symbol: string, precision: number) {
-    const text = `${amount.toLocaleString(undefined, {
-        minimumFractionDigits: precision,
-        maximumFractionDigits: precision,
-    })}${String.fromCharCode(8239)} ${symbol}`
+    let text: string;
+    if (symbol == 'USD') {
+        text = `$${amount.toLocaleString(undefined, {
+            minimumFractionDigits: precision,
+            maximumFractionDigits: precision,
+        })}`
+    }
+    else {
+        text = `${amount.toLocaleString(undefined, {
+            minimumFractionDigits: precision,
+            maximumFractionDigits: precision,
+        })}${String.fromCharCode(8239)} ${symbol}`
+    }
     return text;
 }
 
@@ -56,6 +61,14 @@ export default function Nfts() {
     const [rewardUsd, setRewardUsd] = useState<string>("");
     const [treasuryBalanceUsd, setTreasuryBalanceUsd] = useState<string>("");
     const [walletInput, setWallet] = useState('');
+    const [ethPrice, setEthPrice] = useState<number>(0);
+
+    useEffect(() => {
+        function getEthPrice() {
+            fetch("/api/eth-price").then(data => data.json().then(price => setEthPrice(Number(price))));
+        }
+        getEthPrice();
+    }, [])
 
     useEffect(() => {
         async function getBalances() {
@@ -83,15 +96,14 @@ export default function Nfts() {
                 }
             }
             setTreasuryBalances(tokens);
-            const treasury = await toUSD(TREASURY_VALUE);
-            setTreasuryBalanceUsd(getTokenBalanceString(treasury, 'USD', 2));
+            setTreasuryBalanceUsd(getTokenBalanceString(TREASURY_VALUE * ethPrice, 'USD', 2));
         }
         getBalances();
 
 
 
 
-    }, [])
+    }, [ethPrice])
 
     useEffect(() => {
         async function getTotalSupply() {
@@ -124,8 +136,9 @@ export default function Nfts() {
             }
             sum /= 4;
             setReward(getTokenBalanceString(sum, 'ETH', 5));
-            const sumUsd = await toUSD(sum);
-            setRewardUsd(getTokenBalanceString(sumUsd, 'USD', 2));
+            setRewardUsd(getTokenBalanceString(sum * ethPrice, 'USD', 2));
+            // const sumUsd = await toUSD(sum);
+            // setRewardUsd(getTokenBalanceString(sumUsd, 'USD', 2));
         }
         else {
             setReward(getTokenBalanceString(0, 'ETH', 5))
@@ -217,7 +230,10 @@ export default function Nfts() {
                                 </div>
 
                                 <div className=' h-full flex flex-col justify-between'>
-                                    <div className='font-semibold text-lg'>{`${getTokenBalanceString(TREASURY_VALUE, "ETH", 3)}`}</div>
+                                    <div className='flex flex-row gap-2'>
+                                        <div className='font-semibold text-lg my-auto'>{`${getTokenBalanceString(TREASURY_VALUE, "ETH", 3)}`}</div>
+                                        <div className='font-light text-base my-auto'>{`(${treasuryBalanceUsd})`}</div>
+                                    </div>
                                     {/* {treasuryBalances?.map((item) => (
                                         <li key={item.id} className="">
                                             {item.balance > 0 && getTokenBalanceString(item.balance, item.symbol)}
@@ -234,7 +250,14 @@ export default function Nfts() {
                                 </div>
                                 <div>
                                     <div className='opacity-70 text-sm'>Next payout: SEP 1, 2024</div>
-                                    <div className='text-xl w-64 text-ellipsis overflow-hidden'>{`${reward}`}</div>
+                                    {/* <div className='text-xl w-64 text-ellipsis overflow-hidden'>{`${reward}`}</div> */}
+                                    {walletInput.length > 0 && <div className='flex flex-col justify-end h-fit mt-1'>
+                                        <div className='text-xl w-64 flex flex-row gap-2'>
+                                            <div className='font-semibold text-lg mb-0 leading-6 mt-auto'>{`${reward}`}</div>
+                                            {reward.length > 0 && <div className='font-light text-base mt-auto mb-0'>{`(${rewardUsd})`}</div>}
+                                        </div>
+                                    </div>}
+
                                 </div>
 
 

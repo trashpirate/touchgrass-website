@@ -20,6 +20,7 @@ async function getTokenPrice(coinId: number) {
 
     // success
     const json = response.data.data[coinId.toString()];
+    console.log(json.quote.USD.price);
     return json.quote.USD.price;
   } catch (ex) {
     // error
@@ -29,7 +30,7 @@ async function getTokenPrice(coinId: number) {
 }
 
 export async function GET() {
-  // const price = await getTokenPrice(ETH_ID);
-  const price = 1;
+  const price = await getTokenPrice(ETH_ID);
+  // const price = 1;
   return NextResponse.json(price, { status: 200 });
 }
