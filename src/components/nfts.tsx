@@ -1,38 +1,10 @@
 
 import Image from 'next/image';
 
-import { Alchemy, Network, Utils } from "alchemy-sdk";
-import { NFT_CONTRACT } from '@/lib/metadata';
 import { useEffect, useState } from 'react';
 import TokenAddressInput from './tokenAddressInput';
 import LinkButton from './buttons/linkButton';
-
-const TREASURY_WALLET = "0x248518FCb021213a4c524e4acFc7Ce5CAB04d192";
-const TREASURY_VALUE = 2.716;
-
-const TRAIT_MULTIPLIER: Record<string, number> = ({
-    "GREEN": 0.00025316455,
-    "BLUE": 0.002,
-    "YELLOW": 0.0025,
-    "RED": 0.01,
-    "PURPLE": 0.02,
-})
-
-const alchemyConfig = {
-    apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY,
-    network: Network.BASE_MAINNET,
-};
-
-const alchemy = new Alchemy(alchemyConfig);
-
-
-type TokenInfo = {
-    id: number;
-    balance: number;
-    symbol: string;
-}
-
-
+import { assert } from 'console';
 
 function getTokenBalanceString(amount: number, symbol: string, precision: number) {
     let text: string;
@@ -55,66 +27,48 @@ function getTokenBalanceString(amount: number, symbol: string, precision: number
 
 export default function Nfts() {
 
-    const [treasuryBalances, setTreasuryBalances] = useState<TokenInfo[]>();
+    const [treasuryBalance, setTreasuryBalance] = useState<number>(0);
     const [totalSupply, setTotalSupply] = useState<number>(0);
     const [reward, setReward] = useState<string>("");
     const [rewardUsd, setRewardUsd] = useState<string>("");
     const [treasuryBalanceUsd, setTreasuryBalanceUsd] = useState<string>("");
     const [walletInput, setWallet] = useState('');
-    const [ethPrice, setEthPrice] = useState<number>(0);
+    const [earnPrice, setEarnPrice] = useState<number>(0);
 
     useEffect(() => {
-        function getEthPrice() {
-            fetch("/api/eth-price").then(data => data.json().then(price => setEthPrice(Number(price))));
+        try {
+            fetch("/api/treasury-earn-balance").then(data => data.json()).then(
+                result => setTreasuryBalance(Number(result))
+
+            );
+
+        } catch (error) {
+            setTreasuryBalance(0);
         }
-        getEthPrice();
+
     }, [])
 
     useEffect(() => {
-        async function getBalances() {
+        try {
+            fetch("/api/earn-price").then(data => data.json()).then(
+                result => setEarnPrice(Number(result))
 
-            let tokens: TokenInfo[] = [];
-            const ethBalance = Utils.formatEther(await alchemy.core.getBalance(TREASURY_WALLET));
-
-            tokens.push({
-                id: 0,
-                balance: Number(ethBalance),
-                symbol: "ETH"
-            })
-
-            const balances = await alchemy.core.getTokenBalances(TREASURY_WALLET, ["0x803b629c339941e2b77d2dc499dac9e1fd9eac66"]);
-
-            for (let i = 0; i < balances["tokenBalances"].length; i++) {
-                const token = balances["tokenBalances"][i];
-                const info = await alchemy.core.getTokenMetadata(token.contractAddress);
-                if (info.decimals && info.symbol && token.tokenBalance) {
-                    tokens.push({
-                        id: i = 1,
-                        balance: Number(Utils.formatUnits(token.tokenBalance, info.decimals)),
-                        symbol: info.symbol
-                    })
-                }
-            }
-            setTreasuryBalances(tokens);
-            setTreasuryBalanceUsd(getTokenBalanceString(TREASURY_VALUE * ethPrice, 'USD', 2));
+            );
+        } catch (error) {
+            setEarnPrice(0);
         }
-        getBalances();
 
-
-
-
-    }, [ethPrice])
+    }, [])
 
     useEffect(() => {
-        async function getTotalSupply() {
-            let tx = {
-                to: NFT_CONTRACT,
-                data: "0x18160ddd7f15c72528c2f94fd8dfe3c8d5aa26e2c50c7d81f4bc7bee8d4b7932",
-            }
-            let response = await alchemy.core.call(tx);
-            if (response) {
-                setTotalSupply(Number(Utils.hexValue(response)));
-            }
+        setTreasuryBalanceUsd(getTokenBalanceString(treasuryBalance * earnPrice, 'USD', 2));
+    }, [earnPrice, treasuryBalance])
+
+    useEffect(() => {
+        function getTotalSupply() {
+            fetch("/api/nft-total-supply").then(data => data.json()).then(
+                result => setTotalSupply(Number(result))
+            );
         }
         getTotalSupply();
     }, [])
@@ -124,24 +78,16 @@ export default function Nfts() {
         setWallet(value);
 
         if (value.slice(0, 2) == "0x" && value.length == 42) {
-            let options = {
-                contractAddresses: [NFT_CONTRACT]
-            };
-            const nfts = await alchemy.nft.getNftsForOwner(value, options);
-            let sum: number = 0;
-            for (let i = 0; i < nfts.ownedNfts.length; i++) {
-                const nft = nfts.ownedNfts[i];
-                const trait: string = nft.raw.metadata.attributes[0].value;
-                sum += TRAIT_MULTIPLIER[trait] * TREASURY_VALUE;
-            }
-            sum /= 4;
-            setReward(getTokenBalanceString(sum, 'ETH', 5));
-            setRewardUsd(getTokenBalanceString(sum * ethPrice, 'USD', 2));
-            // const sumUsd = await toUSD(sum);
-            // setRewardUsd(getTokenBalanceString(sumUsd, 'USD', 2));
+
+            fetch("/api/wallet-nft-multiplier?wallet=" + value).then(data => data.json()).then(multiplier => {
+                const reward = treasuryBalance * multiplier;
+                setReward(getTokenBalanceString(reward, 'EARN', 0));
+                setRewardUsd(getTokenBalanceString(reward * earnPrice, 'USD', 2));
+            });
+
         }
         else {
-            setReward(getTokenBalanceString(0, 'ETH', 5))
+            setReward(getTokenBalanceString(0, 'EARN', 0))
             setReward(getTokenBalanceString(0, 'USD', 2));
         }
     };
@@ -206,12 +152,10 @@ export default function Nfts() {
                         <div className='text-2xl leading-tight font-heading mx-auto'>
                             <LinkButton buttonText=' MINT ' externalLink='https://app.touchbasedgrass.com'></LinkButton></div>
                         <div className='text-lg text-center mx-auto my-4 opacity-70'>
-                            Touch Grassy NFT holders receive monthly revenue share from 1/4 of the Touch Grass treasury balance.
+                            Touch Grassy NFT holders receive monthly revenue share from the Touch Grass treasury balance.
                         </div>
 
                     </div>
-
-
                     <div className='w-full sm:h-80 flex justify-end'>
                         <div className='flex flex-row justify-between w-full h-full flex-wrap'>
                             <div className='flex flex-col w-fit h-full mb-8 sm:mb-auto'>
@@ -231,7 +175,7 @@ export default function Nfts() {
 
                                 <div className=' h-full flex flex-col justify-between'>
                                     <div className='flex flex-row gap-2'>
-                                        <div className='font-semibold text-lg my-auto'>{`${getTokenBalanceString(TREASURY_VALUE, "ETH", 3)}`}</div>
+                                        <div className='font-semibold text-lg my-auto'>{`${getTokenBalanceString(treasuryBalance, "EARN", 0)}`}</div>
                                         <div className='font-light text-base my-auto'>{`(${treasuryBalanceUsd})`}</div>
                                     </div>
                                     {/* {treasuryBalances?.map((item) => (
