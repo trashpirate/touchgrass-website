@@ -15,18 +15,19 @@ const client = createPublicClient({
 });
 
 async function getTreasuryEarnBalance() {
-  let ethPrice: number | undefined = undefined;
   const data = await client.readContract({
     address: EARN as `0x${string}`,
     abi: tokenABI,
     functionName: "balanceOf",
     args: [TREASURY as `0x${string}`],
+    blockTag: "latest",
   });
 
   let balance = 0;
   if (data !== undefined) {
     balance = Number(formatEther(data));
   }
+
   return balance;
 }
 

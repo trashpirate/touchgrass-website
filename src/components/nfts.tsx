@@ -37,7 +37,7 @@ export default function Nfts() {
 
     useEffect(() => {
         try {
-            fetch("/api/treasury-earn-balance", { cache: 'force-cache', next: { revalidate: 300 } }).then(data => data.json()).then(
+            fetch("/api/treasury-earn-balance", { cache: 'no-store' }).then(data => data.json()).then(
                 result => setTreasuryBalance(Number(result))
 
             );
