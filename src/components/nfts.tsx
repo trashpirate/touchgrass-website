@@ -50,7 +50,7 @@ export default function Nfts() {
 
     useEffect(() => {
         try {
-            fetch("/api/earn-price", { cache: 'force-cache', next: { revalidate: 300 } }).then(data => data.json()).then(
+            fetch("/api/earn-price", { cache: 'no-store' }).then(data => data.json()).then(
                 result => setEarnPrice(Number(result))
 
             );
@@ -66,7 +66,7 @@ export default function Nfts() {
 
     useEffect(() => {
         function getTotalSupply() {
-            fetch("/api/nft-total-supply", { cache: 'force-cache', next: { revalidate: 300 } }).then(data => data.json()).then(
+            fetch("/api/nft-total-supply", { cache: 'no-store' }).then(data => data.json()).then(
                 result => setTotalSupply(Number(result))
             );
         }
@@ -79,7 +79,7 @@ export default function Nfts() {
 
         if (value.slice(0, 2) == "0x" && value.length == 42) {
 
-            fetch("/api/wallet-nft-multiplier?wallet=" + value, { cache: 'force-cache', next: { revalidate: 300 } }).then(data => data.json()).then(multiplier => {
+            fetch("/api/wallet-nft-multiplier?wallet=" + value, { cache: 'no-store' }).then(data => data.json()).then(multiplier => {
                 const reward = treasuryBalance * multiplier;
                 setReward(getTokenBalanceString(reward, 'EARN', 0));
                 setRewardUsd(getTokenBalanceString(reward * earnPrice, 'USD', 2));
