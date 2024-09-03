@@ -82,6 +82,10 @@ export async function GET() {
     earnUsdPrice = earnEthPrice * ethUsdPrice;
   }
 
+  const headers = {
+    "Cache-Control": "no-store", // Disable caching
+  };
+
   // const price = 1;
-  return NextResponse.json(earnUsdPrice, { status: 200 });
+  return NextResponse.json(earnUsdPrice, { status: 200, headers });
 }

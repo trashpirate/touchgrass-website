@@ -28,5 +28,9 @@ async function getTotalSupply() {
 export async function GET() {
   const totalSupply = await getTotalSupply();
 
-  return NextResponse.json(totalSupply, { status: 200 });
+  const headers = {
+    "Cache-Control": "no-store", // Disable caching
+  };
+
+  return NextResponse.json(totalSupply, { status: 200, headers });
 }

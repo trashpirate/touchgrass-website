@@ -42,5 +42,9 @@ export async function GET(request: NextRequest) {
     multiplier = await getNftMultiplier(param);
   }
 
-  return NextResponse.json(multiplier, { status: 200 });
+  const headers = {
+    "Cache-Control": "no-store", // Disable caching
+  };
+
+  return NextResponse.json(multiplier, { status: 200, headers });
 }

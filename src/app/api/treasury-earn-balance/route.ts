@@ -34,6 +34,10 @@ export async function GET() {
   const treasuryBalance = await getTreasuryEarnBalance();
   // console.log(treasuryBalance);
 
+  const headers = {
+    "Cache-Control": "no-store", // Disable caching
+  };
+
   // const price = 1;
-  return NextResponse.json(treasuryBalance, { status: 200 });
+  return NextResponse.json(treasuryBalance, { status: 200, headers });
 }
