@@ -29,7 +29,7 @@ async function getNftMultiplier(wallet: string) {
     const trait: string = nft.raw.metadata.attributes[0].value;
     sum += TRAIT_MULTIPLIER[trait];
   }
-  sum /= 4;
+  sum /= 16;
   return sum;
 }
 
