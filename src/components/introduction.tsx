@@ -35,11 +35,21 @@ export default function Introduction() {
                     Join Touch $GRASS to disconnect from technology, and engage with the physical world, specifically by being in nature or getting fresh air.
                 </p>
                 <div className='mt-2 font-semibold text-textColor flex flex-col justify-end w-full'>
-                    <div>
-                        <p className='text-sm'>Contract Address:</p>
+                    <div className='my-1'>
+                        <p className='text-sm'>Base Contract:</p>
                         <CopyToClipboard
                             text="0xbb4f69a0fca3f63477b6b3b2a3e8491e5425a356"
                             copyText="0xbb4f69a0fca3f63477b6b3b2a3e8491e5425a356"
+                            textColor='text-primary'
+                            textSize='text-sm'
+                            iconSize='text-[10px]'
+                        />
+                    </div>
+                    <div className='my-1'>
+                        <p className='text-sm'>BNB Contract:</p>
+                        <CopyToClipboard
+                            text="0xf43ac1e44bcb375d318d4fa265eff191a229c8db"
+                            copyText="0xf43ac1e44bcb375d318d4fa265eff191a229c8db"
                             textColor='text-primary'
                             textSize='text-sm'
                             iconSize='text-[10px]'
