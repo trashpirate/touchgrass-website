@@ -15,12 +15,14 @@ const client = createPublicClient({
 });
 
 async function getTreasuryEarnBalance() {
+  const latestBlock = await client.getBlockNumber();
+  // console.log(latestBlock);
   const data = await client.readContract({
     address: EARN as `0x${string}`,
     abi: tokenABI,
     functionName: "balanceOf",
     args: [TREASURY as `0x${string}`],
-    blockTag: "latest",
+    blockNumber: latestBlock,
   });
 
   let balance = 0;
