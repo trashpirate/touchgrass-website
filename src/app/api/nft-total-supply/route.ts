@@ -1,14 +1,12 @@
 import { NextResponse } from "next/server";
 import { createPublicClient, formatEther, http } from "viem";
-import { mainnet } from "viem/chains";
+import { base } from "viem/chains";
 import { NFT_CONTRACT } from "@/lib/metadata";
 import { nftABI } from "@/assets/nftABI";
 
 const client = createPublicClient({
-  chain: mainnet,
-  transport: http(
-    `https://base-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`
-  ),
+  chain: base,
+  transport: http(`${process.env.NEXT_PUBLIC_RPC_BASE}`),
 });
 
 async function getTotalSupply() {

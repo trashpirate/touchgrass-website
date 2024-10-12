@@ -9,9 +9,7 @@ const EARN = "0x0b61c4f33bcdef83359ab97673cb5961c6435f4e";
 
 const client = createPublicClient({
   chain: mainnet,
-  transport: http(
-    `https://eth-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`
-  ),
+  transport: http(`${process.env.NEXT_PUBLIC_RPC_ETH}`),
 });
 
 const ETH_ID = 1027;
