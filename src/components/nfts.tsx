@@ -4,7 +4,30 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import TokenAddressInput from './tokenAddressInput';
 import LinkButton from './buttons/linkButton';
-import { assert } from 'console';
+
+
+export function getNextPayoutDate(): string {
+    const today = new Date();
+    // const today = new Date(2024, 0, 15);
+    // console.log(today)
+
+    // Get the year and month for the next payout
+    const year = today.getMonth() === 11 ? today.getFullYear() + 1 : today.getFullYear();
+    const month = (today.getMonth() + 1) % 12;
+
+    // Create the date for the 1st of the next month
+    const nextPayout = new Date(year, month, 1);
+
+    // Format the date as "MMM D, YYYY"
+    const formattedDate = new Intl.DateTimeFormat('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric',
+    }).format(nextPayout).toUpperCase(); // Convert to uppercase (e.g., OCT 1, 2024)
+
+    return formattedDate;
+}
+
 
 function getTokenBalanceString(amount: number, symbol: string, precision: number) {
     let text: string;
@@ -150,7 +173,7 @@ export default function Nfts() {
                 <div className="p-8 text-textColor w-full max-w-xl mx-auto bg-secondary/40 rounded-xl h-full flex flex-col justify-between gap-10">
                     <div className='flex flex-col justify-center'>
                         <div className='text-2xl leading-tight font-heading mx-auto'>
-                            <LinkButton buttonText=' MINT ' externalLink='https://app.touchbasedgrass.com'></LinkButton></div>
+                            <LinkButton buttonText=' BUY NFT ' externalLink='https://opensea.io/collection/touch-grassy'></LinkButton></div>
                         <div className='text-lg text-center mx-auto my-4 opacity-70'>
                             Touch Grassy NFT holders receive monthly revenue share from the Touch Grass treasury balance.
                         </div>
@@ -193,7 +216,7 @@ export default function Nfts() {
                                     <TokenAddressInput handler={handleWalletChange} value={walletInput}></TokenAddressInput>
                                 </div>
                                 <div>
-                                    <div className='opacity-70 text-sm'>Next payout: SEP 1, 2024</div>
+                                    <div className='opacity-70 text-sm'>{`Next payout: ${getNextPayoutDate()}`}</div>
                                     {/* <div className='text-xl w-64 text-ellipsis overflow-hidden'>{`${reward}`}</div> */}
                                     {walletInput.length > 0 && <div className='flex flex-col justify-end h-fit mt-1'>
                                         <div className='text-xl w-64 flex flex-row gap-2'>
