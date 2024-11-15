@@ -45,7 +45,7 @@ export default function Introduction() {
                             iconSize='text-[10px]'
                         />
                     </div>
-                    <div className='my-1'>
+                    {/* <div className='my-1'>
                         <p className='text-sm'>BNB Contract:</p>
                         <CopyToClipboard
                             text="0xf43ac1e44bcb375d318d4fa265eff191a229c8db"
@@ -54,7 +54,7 @@ export default function Introduction() {
                             textSize='text-sm'
                             iconSize='text-[10px]'
                         />
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>
