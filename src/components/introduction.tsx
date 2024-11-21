@@ -45,16 +45,16 @@ export default function Introduction() {
                             iconSize='text-[10px]'
                         />
                     </div>
-                    {/* <div className='my-1'>
-                        <p className='text-sm'>BNB Contract:</p>
+                    <div className='my-1'>
+                        <p className='text-sm'>Solana Contract:</p>
                         <CopyToClipboard
-                            text="0xf43ac1e44bcb375d318d4fa265eff191a229c8db"
-                            copyText="0xf43ac1e44bcb375d318d4fa265eff191a229c8db"
+                            text="3T3R5KTAXgMF5KVw6v38qUfSUernCHQwYFzfVo1jdjMX"
+                            copyText="3T3R5KTAXgMF5KVw6v38qUfSUernCHQwYFzfVo1jdjMX"
                             textColor='text-primary'
                             textSize='text-sm'
                             iconSize='text-[10px]'
                         />
-                    </div> */}
+                    </div>
                 </div>
             </div>
         </div>
