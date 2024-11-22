@@ -20,9 +20,27 @@ export default function Introduction() {
                             alt="dextools touch grass"
                         />
                     </Link>
+                    <Link href="https://www.dextools.io/app/en/solana/pair-explorer/Gv1FPBMtVPCmn2WmHu67J4GmGqmp9khANzMZk8hCZ1tv?t=1732307728392" className='hover:scale-125 transition-all duration-500  my-auto'>
+                        <Image
+                            src="/dextools_sol.svg"
+                            width={122}
+                            height={122}
+                            style={{ width: "25px", height: "auto" }}
+                            alt="dextools touch grass"
+                        />
+                    </Link>
                     <Link href="https://basescan.io/address/0xbb4f69a0fca3f63477b6b3b2a3e8491e5425a356" className='hover:scale-125 transition-all duration-500  my-auto'>
                         <Image
                             src="/basechain_blue.svg"
+                            width={122}
+                            height={122}
+                            style={{ width: "30px", height: "auto" }}
+                            alt="basescan touch grass"
+                        />
+                    </Link>
+                    <Link href="https://basescan.io/address/0xbb4f69a0fca3f63477b6b3b2a3e8491e5425a356" className='hover:scale-125 transition-all duration-500  my-auto'>
+                        <Image
+                            src="/solscan.png"
                             width={122}
                             height={122}
                             style={{ width: "30px", height: "auto" }}
