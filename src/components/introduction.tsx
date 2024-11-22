@@ -29,7 +29,7 @@ export default function Introduction() {
                             alt="dextools touch grass"
                         />
                     </Link>
-                    <Link href="https://basescan.io/address/0xbb4f69a0fca3f63477b6b3b2a3e8491e5425a356" className='hover:scale-125 transition-all duration-500  my-auto'>
+                    <Link href="https://basescan.org/address/0xbb4f69a0fca3f63477b6b3b2a3e8491e5425a356" className='hover:scale-125 transition-all duration-500  my-auto'>
                         <Image
                             src="/basechain_blue.svg"
                             width={122}
@@ -38,13 +38,13 @@ export default function Introduction() {
                             alt="basescan touch grass"
                         />
                     </Link>
-                    <Link href="https://basescan.io/address/0xbb4f69a0fca3f63477b6b3b2a3e8491e5425a356" className='hover:scale-125 transition-all duration-500  my-auto'>
+                    <Link href="https://solscan.io/token/3T3R5KTAXgMF5KVw6v38qUfSUernCHQwYFzfVo1jdjMX" className='hover:scale-125 transition-all duration-500  my-auto'>
                         <Image
                             src="/solscan.png"
                             width={122}
                             height={122}
                             style={{ width: "30px", height: "auto" }}
-                            alt="basescan touch grass"
+                            alt="solscan touch grass"
                         />
                     </Link>
 
