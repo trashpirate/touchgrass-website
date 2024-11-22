@@ -29,7 +29,7 @@ export default function Introduction() {
                             alt="dextools touch grass"
                         />
                     </Link>
-                    <Link href="https://basescan.io/address/0xbb4f69a0fca3f63477b6b3b2a3e8491e5425a356" className='hover:scale-125 transition-all duration-500  my-auto'>
+                    <Link href="https://basescan.org/address/0xbb4f69a0fca3f63477b6b3b2a3e8491e5425a356" className='hover:scale-125 transition-all duration-500  my-auto'>
                         <Image
                             src="/basechain_blue.svg"
                             width={122}
