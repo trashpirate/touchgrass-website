@@ -42,11 +42,11 @@ export default function Tokenomics() {
                             <h1 className='text-gray-300 font-bold  leading-5'>Network</h1><h1 className='font-semibold'>BASECHAIN</h1>
                         </div>
                         <div className="h-16 flex items-center gap-5 rounded-md border-4 border-secondary bg-white/25 backdrop-blur px-5 w-full">
-                            <h1 className='text-gray-300 font-bold'>Buy Fee:</h1><h1 className='font-semibold'>0%</h1>
+                            <h1 className='text-gray-300 font-bold'>Buy Fee:</h1><h1 className='font-semibold'>3%</h1>
                         </div>
 
                         <div className="h-16 flex items-center gap-5 rounded-md border-4 border-secondary bg-white/25 backdrop-blur px-5 w-full">
-                            <h1 className='text-gray-300 font-bold'>Sell Fee:</h1><h1 className='font-semibold'>0%</h1>
+                            <h1 className='text-gray-300 font-bold'>Sell Fee:</h1><h1 className='font-semibold'>3%</h1>
                         </div>
                     </div>
                 </div>
