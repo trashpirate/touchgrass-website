@@ -27,10 +27,7 @@ export default function Tokenomics() {
                             <h1 className='text-gray-300 font-bold'>Circ. Supply:</h1><h1 className='font-semibold'>1 000 000 000</h1>
                         </div>
                         <div className="h-16 flex items-center gap-5 rounded-md border-4 border-secondary bg-white/25 backdrop-blur px-5 w-full">
-                            <h1 className='text-gray-300 font-bold'>Liquidity:</h1><h1 className='font-semibold'>90%</h1>
-                        </div>
-                        <div className="h-16 flex items-center gap-5 rounded-md border-4 border-secondary bg-white/25 backdrop-blur px-5 w-full">
-                            <h1 className='text-gray-300 font-bold'>Liquidity Lock:</h1><h1 className='font-semibold'>3 months</h1>
+                            <h1 className='text-gray-300 font-bold'>Buy Fee:</h1><h1 className='font-semibold'>0%</h1>
                         </div>
                     </div>
                     <div className="grid grid-rows-subgrid grid-flow-cols gap-4 row-span-4">
@@ -39,11 +36,9 @@ export default function Tokenomics() {
                         </div>
 
                         <div className="h-16 flex items-center gap-5 rounded-md border-4 border-secondary bg-white/25 backdrop-blur px-5 w-full">
-                            <h1 className='text-gray-300 font-bold  leading-5'>Network</h1><h1 className='font-semibold'>BASECHAIN</h1>
+                            <h1 className='text-gray-300 font-bold  leading-5'>Network</h1><h1 className='font-semibold'>BASECHAIN & SOLANA</h1>
                         </div>
-                        <div className="h-16 flex items-center gap-5 rounded-md border-4 border-secondary bg-white/25 backdrop-blur px-5 w-full">
-                            <h1 className='text-gray-300 font-bold'>Buy Fee:</h1><h1 className='font-semibold'>0%</h1>
-                        </div>
+
 
                         <div className="h-16 flex items-center gap-5 rounded-md border-4 border-secondary bg-white/25 backdrop-blur px-5 w-full">
                             <h1 className='text-gray-300 font-bold'>Sell Fee:</h1><h1 className='font-semibold'>0%</h1>
