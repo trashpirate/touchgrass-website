@@ -73,6 +73,26 @@ export default function Introduction() {
                             iconSize='text-[10px]'
                         />
                     </div>
+                    <div className='my-1'>
+                        <p className='text-sm'>Abstract Contract:</p>
+                        <CopyToClipboard
+                            text="0xacc89525051944e27befc51232137897cadabdc8"
+                            copyText="0xacc89525051944e27befc51232137897cadabdc8"
+                            textColor='text-primary'
+                            textSize='text-sm'
+                            iconSize='text-[10px]'
+                        />
+                    </div>
+                    <div className='my-1'>
+                        <p className='text-sm'>Avalanche Contract:</p>
+                        <CopyToClipboard
+                            text="0x0b660e6d0baad53d5f4223e81d76e61cc3c4d739"
+                            copyText="0x0b660e6d0baad53d5f4223e81d76e61cc3c4d739"
+                            textColor='text-primary'
+                            textSize='text-sm'
+                            iconSize='text-[10px]'
+                        />
+                    </div>
                 </div>
             </div>
         </div>

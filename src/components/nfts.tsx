@@ -175,7 +175,7 @@ export default function Nfts() {
                         <div className='text-2xl leading-tight font-heading mx-auto'>
                             <LinkButton buttonText=' BUY NFT ' externalLink='https://opensea.io/collection/touch-grassy'></LinkButton></div>
                         <div className='text-lg text-center mx-auto my-4 opacity-70'>
-                            Touch Grassy NFT holders receive monthly revenue share from the Touch Grass treasury balance.
+                            Touch Grassy NFT holders receive fee share from the Touch Grass treasury balance.
                         </div>
 
                     </div>
@@ -212,11 +212,11 @@ export default function Nfts() {
 
                             <div className='flex flex-col w-fit h-full justify-between'>
                                 <div>
-                                    <h1 className='uppercase font-heading font-bold text-xl'>NFT Revenue Share</h1>
+                                    <h1 className='uppercase font-heading font-bold text-xl'>NFT Fee Share</h1>
                                     <TokenAddressInput handler={handleWalletChange} value={walletInput}></TokenAddressInput>
                                 </div>
                                 <div>
-                                    <div className='opacity-70 text-sm'>{`Next payout: ${getNextPayoutDate()}`}</div>
+                                    {/* <div className='opacity-70 text-sm'>{`Next payout: ${getNextPayoutDate()}`}</div> */}
                                     {/* <div className='text-xl w-64 text-ellipsis overflow-hidden'>{`${reward}`}</div> */}
                                     {walletInput.length > 0 && <div className='flex flex-col justify-end h-fit mt-1'>
                                         <div className='text-xl w-64 flex flex-row gap-2'>
