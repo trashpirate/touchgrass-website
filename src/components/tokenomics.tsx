@@ -36,7 +36,7 @@ export default function Tokenomics() {
                         </div>
 
                         <div className="h-16 flex items-center gap-5 rounded-md border-4 border-secondary bg-white/25 backdrop-blur px-5 w-full">
-                            <h1 className='text-gray-300 font-bold  leading-5'>Network</h1><h1 className='font-semibold'>BASECHAIN & SOLANA</h1>
+                            <h1 className='text-gray-300 font-bold  leading-5'>Network</h1><h1 className='font-semibold'>Multi-chain</h1>
                         </div>
 
 
