@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { ClipboardDocumentIcon, CheckIcon } from "@heroicons/react/24/solid";
 
-export default function CopyToClipboard(props: { text: string; copyText: string; textColor: string; textSize: string; iconSize: string }) {
+export default function CopyToClipboard(props: { text: string; copyText: string; textColor: string; textSize: string; iconSize: string, link: string }) {
   const [copied, setCopied] = useState<boolean>(false);
 
   useEffect(() => {
@@ -26,10 +26,11 @@ export default function CopyToClipboard(props: { text: string; copyText: string;
   };
 
   return (
-    <div className="flex flex-row hover:cursor-pointer opacity-80 hover:opacity-100 transition-all duration-100 w-full justify-end ">
-      <a href={`https://basescan.org/address/${props.copyText}`} target="_blank" className={`${props.textSize} ${props.textColor} text-ellipsis overflow-hidden leading-normal py-1`}>{props.text}</a>
-      <div onClick={copylink} className="flex justify-center align-middle">
-        <div className={`${props.textColor} ${props.iconSize} ml-2 h-full py-1 align-middle w-4`}>
+    <div className="flex flex-row hover:cursor-pointer opacity-80 hover:opacity-100  transition-all duration-500 w-full justify-end ">
+      {/* <a href={props.link + props.copyText} target="_blank" className={`${props.textSize} ${props.textColor} text-ellipsis overflow-hidden leading-normal py-1`}>{props.text}</a> */}
+      <div onClick={copylink} className="flex justify-center align-middle mb-2">
+        <div className={`${props.textSize} ${props.textColor} text-ellipsis overflow-hidden leading-normal py-px w-40 sm:w-full`}>{props.text}</div>
+        <div className={`${props.textColor} ${props.iconSize} ml-2 h-full py-1 align-middle w-4 `}>
           {copied ? <CheckIcon /> : <ClipboardDocumentIcon />}
         </div>
 
