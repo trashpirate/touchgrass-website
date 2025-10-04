@@ -4,12 +4,17 @@ import { NextResponse } from "next/server";
 import { createPublicClient, formatEther, http } from "viem";
 import { mainnet } from "viem/chains";
 
+// Force this route to be dynamic and not cached by ISR
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 const WETH = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2";
 const EARN = "0x0b61c4f33bcdef83359ab97673cb5961c6435f4e";
 
 const client = createPublicClient({
   chain: mainnet,
-  transport: http(`${process.env.NEXT_PUBLIC_RPC_ETH}`),
+  transport: http(`${process.env.RPC_ETH}`),
 });
 
 const ETH_ID = 1027;
@@ -20,7 +25,7 @@ async function getETHUSDPrice() {
       "https://pro-api.coinmarketcap.com/v2/cryptocurrency/quotes/latest",
       {
         headers: {
-          "X-CMC_PRO_API_KEY": process.env.NEXT_PUBLIC_CMC_API_KEY, // Replace with your CoinMarketCap API key
+          "X-CMC_PRO_API_KEY": process.env.CMC_API_KEY, // Replace with your CoinMarketCap API key
           ["Content-Type"]: "application/json",
         },
         params: {

@@ -4,9 +4,14 @@ import { base } from "viem/chains";
 import { NFT_CONTRACT } from "@/lib/metadata";
 import { nftABI } from "@/assets/nftABI";
 
+// Force this route to be dynamic and not cached by ISR
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 const client = createPublicClient({
   chain: base,
-  transport: http(`${process.env.NEXT_PUBLIC_RPC_BASE}`),
+  transport: http(`${process.env.RPC_BASE}`),
 });
 
 async function getTotalSupply() {
