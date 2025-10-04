@@ -1,6 +1,11 @@
 import { NextResponse } from "next/server";
 import axios from "axios";
 
+// Force this route to be dynamic and not cached by ISR
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 const ETH_ID = 1027;
 
 async function getTokenPrice(coinId: number) {
@@ -9,7 +14,7 @@ async function getTokenPrice(coinId: number) {
       "https://pro-api.coinmarketcap.com/v2/cryptocurrency/quotes/latest",
       {
         headers: {
-          "X-CMC_PRO_API_KEY": process.env.NEXT_PUBLIC_CMC_API_KEY, // Replace with your CoinMarketCap API key
+          "X-CMC_PRO_API_KEY": process.env.CMC_API_KEY, // Replace with your CoinMarketCap API key
           ["Content-Type"]: "application/json",
         },
         params: {

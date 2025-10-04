@@ -34,8 +34,8 @@ $ npm install
 Before running any commands, create a .env file and add your [Alchemy API Key](https://www.alchemy.com/) and [CoinMarketCap API Key](https://coinmarketcap.com/api/) to the file.
 
 ```bash
-NEXT_PUBLIC_ALCHEMY_API_KEY=<your API key>
-NEXT_PUBLIC_CMC_API_KEY=<your API key>
+ALCHEMY_API_KEY=<your API key>
+CMC_API_KEY=<your API key>
 
 ```
 

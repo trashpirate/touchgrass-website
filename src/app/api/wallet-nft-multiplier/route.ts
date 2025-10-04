@@ -3,6 +3,11 @@ import { NFT_CONTRACT } from "@/lib/metadata";
 
 import { Alchemy, Network, Utils } from "alchemy-sdk";
 
+// Force this route to be dynamic and not cached by ISR
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 const TRAIT_MULTIPLIER: Record<string, number> = {
   GREEN: 0.00025316455,
   BLUE: 0.002,
@@ -12,7 +17,7 @@ const TRAIT_MULTIPLIER: Record<string, number> = {
 };
 
 const alchemyConfig = {
-  apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY,
+  apiKey: process.env.ALCHEMY_API_KEY,
   network: Network.BASE_MAINNET,
 };
 
