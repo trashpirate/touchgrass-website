@@ -12,22 +12,22 @@ import { useState } from 'react';
 const contractAddresses: { [key: string]: string } = {
     'Base': '0xbb4f69a0fca3f63477b6b3b2a3e8491e5425a356',
     'Solana': '3T3R5KTAXgMF5KVw6v38qUfSUernCHQwYFzfVo1jdjMX',
-    'Abstract': '0xacc89525051944e27befc51232137897cadabdc8',
+    'BNB': '0xf43AC1E44bcB375D318d4Fa265eFf191a229c8DB',
     'Avalanche': '0x0b660e6d0baad53d5f4223e81d76e61cc3c4d739'
 };
 
 const blockchainExplorers: { [key: string]: string } = {
     'Base': 'https://basescan.org/address/',
     'Solana': 'https://solscan.io/token/',
-    'Abstract': 'https://abstrascan.com/address/',
+    'BNB': 'https://bscscan.com/address/',
     'Avalanche': 'https://snowtrace.io/address/'
 };
 
 const chartLinks: { [key: string]: string } = {
-    'Base': 'https://www.dextools.io/app/en/base/pair-explorer/0x2aa08a2502dba730a70467031194451d3e5e9f93?t=1721325793018',
-    'Solana': 'https://www.dextools.io/app/en/solana/pair-explorer/Gv1FPBMtVPCmn2WmHu67J4GmGqmp9khANzMZk8hCZ1tv?t=1732307728392',
-    'Abstract': 'https://www.dextools.io/app/en/abstract/pair-explorer/0xacc89525051944e27befc51232137897cadabdc8?t=1721325793018',
-    'Avalanche': 'https://www.dextools.io/app/en/avalanche/pair-explorer/0x0b660e6d0baad53d5f4223e81d76e61cc3c4d739?t=1721325793018'
+    'Base': 'https://www.dextools.io/app/en/base/pair-explorer/0x2aa08a2502dba730a70467031194451d3e5e9f93',
+    'Solana': 'https://www.dextools.io/app/en/solana/pair-explorer/Gv1FPBMtVPCmn2WmHu67J4GmGqmp9khANzMZk8hCZ1tv',
+    'BNB': 'https://www.dextools.io/app/bnb/pair-explorer/0xfd66f4e3cdc03bd5cedcda5a876d238a098d8907',
+    'Avalanche': 'https://www.dextools.io/app/en/avalanche/pair-explorer/0x0b660e6d0baad53d5f4223e81d76e61cc3c4d739'
 };
 
 
