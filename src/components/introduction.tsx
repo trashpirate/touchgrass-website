@@ -24,10 +24,10 @@ const blockchainExplorers: { [key: string]: string } = {
 };
 
 const chartLinks: { [key: string]: string } = {
-    'Base': 'https://www.dextools.io/app/en/base/pair-explorer/0x2aa08a2502dba730a70467031194451d3e5e9f93?t=1721325793018',
-    'Solana': 'https://www.dextools.io/app/en/solana/pair-explorer/Gv1FPBMtVPCmn2WmHu67J4GmGqmp9khANzMZk8hCZ1tv?t=1732307728392',
+    'Base': 'https://www.dextools.io/app/en/base/pair-explorer/0x2aa08a2502dba730a70467031194451d3e5e9f93',
+    'Solana': 'https://www.dextools.io/app/en/solana/pair-explorer/Gv1FPBMtVPCmn2WmHu67J4GmGqmp9khANzMZk8hCZ1tv',
     'BNB': 'https://www.dextools.io/app/bnb/pair-explorer/0xfd66f4e3cdc03bd5cedcda5a876d238a098d8907',
-    'Avalanche': 'https://www.dextools.io/app/en/avalanche/pair-explorer/0x0b660e6d0baad53d5f4223e81d76e61cc3c4d739?t=1721325793018'
+    'Avalanche': 'https://www.dextools.io/app/en/avalanche/pair-explorer/0x0b660e6d0baad53d5f4223e81d76e61cc3c4d739'
 };
 
 
